@@ -4,8 +4,9 @@ const { Sequelize, QueryTypes } = require('sequelize');
 const spawn = require('child_process').spawn;
 const config = require('../../config');
 const OssClient = require('../common/oss-client');
+const fsExtra = require('../common/fs-extra');
 
-const WORK_DIR = 'e:/shixun_mp4_2';
+const WORK_DIR = '/root/shixun_mp4';
 const SHIXUN_DIR = 'shixun/';
 
 const sequelize = new Sequelize(config.mysql.database, config.mysql.user, config.mysql.password, {
@@ -23,7 +24,9 @@ const sequelize = new Sequelize(config.mysql.database, config.mysql.user, config
 const client = new OssClient(config.ossclient);
 
 async function queryData(count = 5, index = 0) {
-  const sql = `select commentary_id, record_classroom from commentary_course where status = 200 and record_classroom_file is null and commentary_id%${count} = ${index}`;
+  const sql = `select c.commentary_id, c.record_classroom from shixun.commentary_course c,shixun.commentary_project p
+    where c.commentary_id=p.commentary_id and p.project_id='26' and c.theme_id=10042
+    and c.status = 200 and c.record_classroom_file is null and c.commentary_id%${count} = ${index}`;
   const [rows] = await sequelize.query(sql);
   return rows;
 }
@@ -64,7 +67,7 @@ async function processRow(row) {
       let m3u8 = results[0].uri || '';
       if (!m3u8) throw new Error('m3u8 not found.');
 
-      m3u8 = m3u8.replace('http:', 'https:');
+      m3u8 = m3u8.replace('http://videobjcdn.lejiaolexue.com', 'https://file-video.oss-cn-beijing.aliyuncs.com');
 
       // m3u8 to mp4
       console.log('🚀 ~ m3u8 to mp4:', m3u8);
@@ -72,8 +75,9 @@ async function processRow(row) {
 
       // upload to oss
       const ossRelativePath = SHIXUN_DIR + ossFileName;
+      const localFile = path.join(WORK_DIR, ossFileName);
       console.log('🚀 ~ upload to oss:', ossRelativePath);
-      const ret = await client.put(ossRelativePath, path.join(WORK_DIR, ossFileName), {
+      const ret = await client.put(ossRelativePath, localFile, {
         timeout: 30 * 60 * 1000,
       });
       if (ret.res.statusCode !== 200) throw new Error(ret.res.statusMessage);
@@ -84,6 +88,11 @@ async function processRow(row) {
       row.record_classroom_file.oss.ossFullPath = `https://fileimosscdn.lejiaolexue.com/${ossRelativePath}`;
       console.log('🚀 ~ updateRecordClassroomFile:', row.commentary_id);
       await updateRecordClassroomFile(row.commentary_id, JSON.stringify(row.record_classroom_file));
+
+      // 删除生成的视频文件
+      if (fsExtra.existsSync(localFile)) {
+        fsExtra.unlinkSync(localFile);
+      }
 
       console.log('🚀 ~ ok');
     }
@@ -112,8 +121,8 @@ async function main() {
 
 main();
 
-// 510000	510700	510703	四川省绵阳市涪城区
-// 510000	511300	511323	四川省南充市蓬安县
-// 510000	511300	511325	四川省南充市西充县
-// 510000	511300	511321	四川省南充市南部县
-// 510000	511300	511381	四川省南充市阆中市
+// 510000       510700  510703  四川省绵阳市涪城区
+// 510000       511300  511323  四川省南充市蓬安县
+// 510000       511300  511325  四川省南充市西充县
+// 510000       511300  511321  四川省南充市南部县
+// 510000       511300  511381  四川省南充市阆中市

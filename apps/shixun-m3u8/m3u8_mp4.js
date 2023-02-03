@@ -1,10 +1,10 @@
 const path = require('path');
-const shixunApi = require('../common/shixun_api');
-const { Sequelize, QueryTypes } = require('sequelize');
+const shixunApi = require('../../common/shixun_api');
+const { Sequelize } = require('sequelize');
 const spawn = require('child_process').spawn;
-const config = require('../../config');
-const OssClient = require('../common/oss-client');
-const fsExtra = require('../common/fs-extra');
+const OssClient = require('../../common/oss-client');
+const fsExtra = require('../../common/fs-extra');
+const config = require('../../config.json');
 
 const WORK_DIR = '/root/shixun_mp4';
 const SHIXUN_DIR = 'shixun/';

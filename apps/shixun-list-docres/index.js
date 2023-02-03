@@ -1,6 +1,6 @@
 const path = require('path');
-const fsExtra = require('../common/fs-extra');
-const OssClient = require('../common/oss-client');
+const fsExtra = require('../../common/fs-extra');
+const OssClient = require('../../common/oss-client');
 const config = require('../../config.json');
 
 const ossClient = new OssClient(config.ossclient);

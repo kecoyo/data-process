@@ -1,9 +1,9 @@
 const path = require('path');
-const { createCsvTask } = require('../common/task');
-const OssClient = require('../common/oss-client');
+const { createCsvTask } = require('../../common/task');
+const OssClient = require('../../common/oss-client');
 const config = require('../../config.json');
 const _ = require('lodash');
-const fsExtra = require('../common/fs-extra');
+const fsExtra = require('../../common/fs-extra');
 
 config.ossclient.bucket = 'file-video'; // lx-file
 

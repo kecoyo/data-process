@@ -1,7 +1,7 @@
 const path = require('path');
 const _ = require('lodash');
-const { createCsvTask } = require('../common/task');
-const shixunApi = require('../common/shixun_api');
+const { createCsvTask } = require('../../common/task');
+const shixunApi = require('../../common/shixun_api');
 
 /**
  * 师训处理老师更换能力点

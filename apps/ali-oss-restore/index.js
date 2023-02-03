@@ -1,8 +1,7 @@
 const path = require('path');
-const fsExtra = require('../common/fs-extra');
-const OssClient = require('../common/oss-client');
+const OssClient = require('../../common/oss-client');
+const { createArrayTask } = require('../../common/task');
 const config = require('../../config.json');
-const { createArrayTask } = require('../common/task');
 
 const ossClient = new OssClient(config.ossclient);
 

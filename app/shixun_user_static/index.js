@@ -7,8 +7,8 @@ const shixunApi = require('../common/shixun_api');
  * 师训处理数据
  */
 createCsvTask({
-  input: path.join(__dirname, './input.csv'),
-  output: path.join(__dirname, './output.csv'),
+  input: path.join(__dirname, './input-涪城区.csv'),
+  output: path.join(__dirname, './output-涪城区.csv'),
   options: {
     headers: true,
   },

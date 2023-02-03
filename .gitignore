@@ -14,7 +14,9 @@ run/
 typings/
 .nyc_output/
 
+.env
 config.json
+config.js
 
 input-*.txt
 output-*.txt

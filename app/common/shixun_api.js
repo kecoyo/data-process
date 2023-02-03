@@ -56,6 +56,14 @@ const shixunApi = {
       })
       .then((res) => res.data);
   },
+
+  async videoCheck(video_id) {
+    return await httpClient.get('https://resc.app.ljlx.com/rest/video/check.ashx?video_id=' + video_id).then((res) => res.data);
+  },
+
+  async getContents(uri) {
+    return await httpClient.get(uri);
+  },
 };
 
 module.exports = shixunApi;

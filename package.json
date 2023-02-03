@@ -10,13 +10,18 @@
     "ali-oss": "^6.17.1",
     "axios": "^1.1.3",
     "converter-to-sync": "^1.1.9",
+    "dotenv": "^16.0.3",
     "exceljs": "^4.3.0",
     "fast-csv": "^4.3.6",
     "fastq": "^1.13.0",
+    "ffmpeg": "^0.0.4",
+    "fluent-ffmpeg": "^2.1.2",
     "fs-extra": "^10.1.0",
     "jeselvmo": "^2.0.7",
     "lodash": "^4.17.21",
-    "mysql2": "^2.3.3"
+    "mysql2": "^2.3.3",
+    "redis": "^4.5.1",
+    "sequelize": "^6.27.0"
   },
   "devDependencies": {
     "eslint": "^8",

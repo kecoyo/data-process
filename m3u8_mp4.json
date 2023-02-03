@@ -1,0 +1,49 @@
+{
+  "apps": [
+    {
+      "name": "shixun_m3u8_0",
+      "cwd": "D:/workspace/data-process",
+      "script": "D:/workspace/data-process/app/shixun_m3u8/m3u8_mp4.js",
+      "args": "5 0",
+      "error_file": "D:/workspace/data-process/logs/shixun_m3u8_0.error.log",
+      "out_file": "D:/workspace/data-process/logs/shixun_m3u8_0.out.log",
+      "watch": false
+    },
+    {
+      "name": "shixun_m3u8_1",
+      "cwd": "D:/workspace/data-process",
+      "script": "D:/workspace/data-process/app/shixun_m3u8/m3u8_mp4.js",
+      "args": "5 1",
+      "error_file": "D:/workspace/data-process/logs/shixun_m3u8_1.error.log",
+      "out_file": "D:/workspace/data-process/logs/shixun_m3u8_1.out.log",
+      "watch": false
+    },
+    {
+      "name": "shixun_m3u8_2",
+      "cwd": "D:/workspace/data-process",
+      "script": "D:/workspace/data-process/app/shixun_m3u8/m3u8_mp4.js",
+      "args": "5 2",
+      "error_file": "D:/workspace/data-process/logs/shixun_m3u8_2.error.log",
+      "out_file": "D:/workspace/data-process/logs/shixun_m3u8_2.out.log",
+      "watch": false
+    },
+    {
+      "name": "shixun_m3u8_3",
+      "cwd": "D:/workspace/data-process",
+      "script": "D:/workspace/data-process/app/shixun_m3u8/m3u8_mp4.js",
+      "args": "5 3",
+      "error_file": "D:/workspace/data-process/logs/shixun_m3u8_3.error.log",
+      "out_file": "D:/workspace/data-process/logs/shixun_m3u8_3.out.log",
+      "watch": false
+    },
+    {
+      "name": "shixun_m3u8_4",
+      "cwd": "D:/workspace/data-process",
+      "script": "D:/workspace/data-process/app/shixun_m3u8/m3u8_mp4.js",
+      "args": "5 4",
+      "error_file": "D:/workspace/data-process/logs/shixun_m3u8_4.error.log",
+      "out_file": "D:/workspace/data-process/logs/shixun_m3u8_4.out.log",
+      "watch": false
+    }
+  ]
+}

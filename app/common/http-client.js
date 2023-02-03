@@ -2,6 +2,7 @@ const axios = require('axios');
 
 const httpClient = axios.create({
   // baseURL: 'http://localhost:8080/',
+  timeout: 10000,
 });
 
 // 添加请求拦截器

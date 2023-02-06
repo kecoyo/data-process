@@ -2,19 +2,20 @@
 /* eslint-disable no-empty-function */
 const fsExtra = require('./fs-extra');
 const fastq = require('fastq');
+const _ = require('lodash');
 
 class Task {
-  constructor(options = {}) {
-    this.options = options;
+  constructor(config = {}) {
+    this.config = _.defaultsDeep({}, config, {
+      options: {},
+      concurrency: 10, // 并发数
+    });
 
-    if (!this.options.input) throw new Error('missing input');
-    if (!this.options.output) {
-      this.options.output = this.options.input;
+    if (!this.config.input) throw new Error('missing input');
+    if (!this.config.output) {
+      this.config.output = this.config.input;
     }
-    if (!this.options.processRow) throw new Error('missing processRow(row)');
-
-    // 并发数
-    this.concurrency = this.options.concurrency || 10;
+    if (!this.config.processRow) throw new Error('missing processRow(row)');
 
     this.startTime = 0;
     this.startTime = 0;
@@ -44,20 +45,20 @@ class Task {
   }
 
   async beforeProcess() {
-    if (this.options.beforeProcess) {
-      await this.options.beforeProcess(this.list);
+    if (this.config.beforeProcess) {
+      await this.config.beforeProcess(this.list);
     }
   }
 
   async afterProcess() {
-    if (this.options.afterProcess) {
-      await this.options.afterProcess(this.list);
+    if (this.config.afterProcess) {
+      await this.config.afterProcess(this.list);
     }
   }
 
   async process() {
     return new Promise((resolve, reject) => {
-      let concurrency = this.list.length < this.concurrency ? this.list.length : this.concurrency;
+      let concurrency = this.list.length < this.config.concurrency ? this.list.length : this.config.concurrency;
       const queue = fastq.promise(this, this.processRow, concurrency);
       for (let i = 0; i < this.list.length; i++) {
         const row = this.list[i];
@@ -72,7 +73,7 @@ class Task {
           })
           .catch(err => {
             console.log(i, row);
-            if (this.options.showErrorLog) console.log(err);
+            if (this.config.showErrorLog) console.log(err);
             this.fail++;
             if (this.success + this.fail === this.list.length) {
               resolve(this.success + this.fail);
@@ -83,45 +84,51 @@ class Task {
   }
 
   async processRow({ row, i }) {
-    if (this.options.processRow) {
-      return await this.options.processRow(row, i);
+    if (this.config.processRow) {
+      return await this.config.processRow(row, i);
     }
     return true;
   }
 
   async onCompleted() {
-    if (this.options.onCompleted) {
-      await this.options.onCompleted(this.list);
+    if (this.config.onCompleted) {
+      await this.config.onCompleted(this.list);
     }
   }
 }
 
 class CsvTask extends Task {
   async readFile() {
-    this.list = await fsExtra.readCsv(this.options.input, this.options.options);
+    this.list = await fsExtra.readCsv(this.config.input, this.config.options);
   }
 
   async writeFile() {
-    await fsExtra.writeCsv(this.options.output, this.list, this.options.options);
+    await fsExtra.writeCsv(this.config.output, this.list, this.config.options);
   }
 }
 
-function createCsvTask(options) {
-  new CsvTask(options).run();
+function createCsvTask(config) {
+  config = _.defaultsDeep({}, config, {
+    options: {
+      headers: true,
+    },
+  });
+  new CsvTask(config).run();
 }
 
 class ArrayTask extends Task {
   async readFile() {
-    this.list = await fsExtra.readArray(this.options.input, this.options.options);
+    this.list = await fsExtra.readArray(this.config.input, this.config.options);
   }
 
   async writeFile() {
-    await fsExtra.writeArray(this.options.output, this.list, this.options.options);
+    await fsExtra.writeArray(this.config.output, this.list, this.config.options);
   }
 }
 
-function createArrayTask(options) {
-  new ArrayTask(options).run();
+function createArrayTask(config) {
+  config = _.defaultsDeep({}, config, {});
+  new ArrayTask(config).run();
 }
 
 module.exports = {

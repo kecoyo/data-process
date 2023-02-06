@@ -9,9 +9,8 @@ const ossClient = new OssClient(config.ossclient);
  * OSS恢复归档文件
  */
 createArrayTask({
-  input: path.join(__dirname, './data.txt'),
-  output: path.join(__dirname, './data.txt'),
-  options: {},
+  input: path.join(__dirname, './restore-data.txt'),
+  output: path.join(__dirname, './restore-data.txt'),
   processRow: async (data, i) => {
     if (!data[0]) {
       throw new Error('缺少参数：(data[0])');

@@ -52,7 +52,7 @@ class OssClient extends OSS {
   async deleteFile(name) {
     try {
       let ret = await this.delete(name);
-      return ret.res.statusCode || ret.res.statusMessage;
+      return ret.res.statusCode;
     } catch (err) {
       return err.code || err.status;
     }

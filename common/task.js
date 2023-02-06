@@ -8,7 +8,9 @@ class Task {
     this.options = options;
 
     if (!this.options.input) throw new Error('missing input');
-    if (!this.options.output) throw new Error('missing output');
+    if (!this.options.output) {
+      this.options.output = this.options.input;
+    }
     if (!this.options.processRow) throw new Error('missing processRow(row)');
 
     // 并发数
@@ -29,6 +31,7 @@ class Task {
       await this.writeFile();
       this.endTime = Date.now();
       console.log(`成功: ${this.success}, 失败: ${this.fail}, 用时：${(this.endTime - this.startTime) / 1000}s`);
+      await this.onCompleted();
     });
   }
 
@@ -67,7 +70,7 @@ class Task {
               resolve(this.success + this.fail);
             }
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(i, row);
             if (this.options.showErrorLog) console.log(err);
             this.fail++;
@@ -84,6 +87,12 @@ class Task {
       return await this.options.processRow(row, i);
     }
     return true;
+  }
+
+  async onCompleted() {
+    if (this.options.onCompleted) {
+      await this.options.onCompleted(this.list);
+    }
   }
 }
 

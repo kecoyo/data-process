@@ -3,10 +3,7 @@ const { createCsvTask } = require('../../common/task');
 const OssClient = require('../../common/oss-client');
 const config = require('../../config.json');
 
-const ossClient = new OssClient({
-  ...config.ossclient,
-  bucket: 'file-im',
-});
+const ossClient = new OssClient(Object.assign({}, config.ossclient, { bucket: 'file-im' }));
 
 /**
  * 删除列表中文件

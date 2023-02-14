@@ -7,8 +7,8 @@ const shixunApi = require('../../common/shixun_api');
  * 师训处理老师更换能力点
  */
 createCsvTask({
-  input: path.join(__dirname, './input.csv'),
-  output: path.join(__dirname, './output.csv'),
+  input: path.join(__dirname, './update_points-input.csv'),
+  output: path.join(__dirname, './update_points-output.csv'),
   options: {
     headers: true,
   },
@@ -27,7 +27,7 @@ createCsvTask({
     if (row.school_id && row.user_id) {
       const userStatic = await shixunApi.getUserStatic(row.school_id, row.user_id);
       if (userStatic) {
-        const points = userStatic.onlinedetail.map((o) => o.course_name.split(' ')[0]);
+        const points = userStatic.onlinedetail.map(o => o.course_name.split(' ')[0]);
         Object.assign(row, {
           old_points: points.join(';'),
         });
@@ -54,7 +54,7 @@ createCsvTask({
     {
       const userStatic = await shixunApi.getUserStatic(row.school_id, row.user_id);
       if (userStatic) {
-        const points = userStatic.onlinedetail.map((o) => o.course_name.split(' ')[0]);
+        const points = userStatic.onlinedetail.map(o => o.course_name.split(' ')[0]);
         Object.assign(row, {
           new_points: points.join(';'),
         });

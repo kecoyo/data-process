@@ -20,10 +20,18 @@
     "lodash": "^4.17.21",
     "mysql2": "^2.3.3",
     "redis": "^4.5.1",
-    "sequelize": "^6.27.0"
+    "sequelize": "^6.27.0",
+    "universalify": "^2.0.0"
   },
   "devDependencies": {
-    "eslint": "^8",
-    "eslint-config-egg": "^12"
-  }
+    "eslint": "^8.35.0",
+    "eslint-config-ljlx": "^1.0.0",
+    "prettier-config-ljlx": "^1.0.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint-config-ljlx"
+    ]
+  },
+  "prettier": "prettier-config-ljlx"
 }

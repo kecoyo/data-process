@@ -1,8 +1,6 @@
-/* eslint-disable no-loop-func */
-/* eslint-disable no-empty-function */
-const fsExtra = require('./fs-extra');
 const fastq = require('fastq');
 const _ = require('lodash');
+const fsExtra = require('./fs-extra');
 
 class Task {
   constructor(config = {}) {

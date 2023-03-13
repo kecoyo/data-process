@@ -7,16 +7,16 @@ const httpClient = axios.create({
 
 // 添加请求拦截器
 httpClient.interceptors.request.use(
-  (config) => config,
-  (error) => Promise.reject(error)
+  config => config,
+  error => Promise.reject(error)
 );
 
 // 添加响应拦截器
 httpClient.interceptors.response.use(
-  (response) => {
+  response => {
     return response.data;
   },
-  (error) => Promise.reject(error)
+  error => Promise.reject(error)
 );
 
 module.exports = httpClient;

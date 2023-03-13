@@ -3,7 +3,7 @@ const OssClient = require('../../common/oss-client');
 const { createCsvTask } = require('../../common/task');
 const config = require('../../config.json');
 
-const ossClient = new OssClient(Object.assign({}, config.ossclient, { bucket: 'file-video' }));
+const ossClient = new OssClient(Object.assign({}, config.ossclient, { bucket: 'file-im' }));
 
 /**
  * OSS恢复归档文件

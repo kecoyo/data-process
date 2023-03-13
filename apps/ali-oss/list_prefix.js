@@ -20,7 +20,7 @@ createCsvTask({
     headers: true,
   },
   processRow: async row => {
-    let prefix = row.prefix;
+    let { prefix } = row;
 
     let list = await ossClient.listOssFile({ prefix: prefix, 'max-keys': 1000 });
 

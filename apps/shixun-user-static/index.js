@@ -35,11 +35,11 @@ createCsvTask({
     if (row.school_id) {
       const userStatic = await shixunApi.getUserStatic(row.school_id, row.user_id);
       if (userStatic) {
-        const points = userStatic.onlinedetail.map((o) => o.course_name.split(' ')[0]);
+        const points = userStatic.onlinedetail.map(o => o.course_name.split(' ')[0]);
         const totalScore = parseFloat(_.sumBy(userStatic.list, 'user_score').toFixed(2));
         Object.assign(row, {
           points: points.join(';'),
-          scores: userStatic.onlinedetail.map((o) => o.ut).join(';'),
+          scores: userStatic.onlinedetail.map(o => o.ut).join(';'),
           total_score: totalScore,
           points_len: points.length,
         });

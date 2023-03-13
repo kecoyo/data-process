@@ -6,7 +6,7 @@ const SPACE = ' ';
 
 function stringify(array, { EOL = ENTER, space = SPACE, finalEOL = false } = {}) {
   const EOF = finalEOL ? EOL : '';
-  array = array.map((item) => item.join(space));
+  array = array.map(item => item.join(space));
   return array.join(EOL) + EOF;
 }
 

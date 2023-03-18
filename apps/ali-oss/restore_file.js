@@ -1,7 +1,7 @@
 const path = require('path');
 const OssClient = require('../../common/oss-client');
 const { createCsvTask } = require('../../common/task');
-const config = require('../../config.json');
+const config = require('../../config');
 
 const ossClient = new OssClient(Object.assign({}, config.ossclient, { bucket: 'file-im' }));
 

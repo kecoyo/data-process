@@ -3,7 +3,7 @@ const _ = require('lodash');
 const { createCsvTask } = require('../../common/task');
 const OssClient = require('../../common/oss-client');
 const fsExtra = require('../../common/fs-extra');
-const config = require('../../config.json');
+const config = require('../../config');
 
 const ossClient = new OssClient({
   ...config.ossclient,

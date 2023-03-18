@@ -1,0 +1,101 @@
+zh_name,en_name,errno,errmsg,id
+床单,sheet,0,,584780806
+棉被,quilt,0,,584780807
+枕头,pillow,0,,505887352
+枕套,pillow case,0,,584780809
+床垫,mattress,0,,584780810
+废帘,curtain,0,,584780811
+地毯,carpet,0,,507857082
+抽屉,drawer,0,,584780812
+衣柜,wardrobe,0,,52597077
+毛巾,towel,0,,584780814
+浴缸,bathtub,0,,567198821
+浴帘,shower curtain,0,,584780815
+浴衣,bathrobe,0,,584780816
+拖鞋,slipper,0,,584780817
+护发素,hair conditioner,0,,584780818
+洗发水,shampoo,0,,584780819
+吹风机,hair drier,0,,584780820
+电热壶,electric kettle,0,,584780822
+空调,air conditioner,0,,584780824
+大堂,lobby,0,,584780827
+电梯,elevator,0,,42680205
+青旅,youth hostel,0,,584780829
+别墅,villa,0,,584780830
+连通房,connecting room,0,,584780831
+临近房,adiacent room,0,,584780832
+酒店,hotel,0,,584780833
+汽车旅馆,mote,0,,584780834
+标准间,standard room,0,,584780836
+大床房,king-size bed room,0,,584780838
+单人房,single room,0,,584780839
+早餐券,breakfast voucher,0,,584780840
+西餐庁,western restaurant,0,,584780841
+中餐庁,Chinese restaurant,0,,584780843
+咖啡厅,café,0,,584780845
+停车场,parking lot,0,,584780846
+棋牌室,chess and card room,0,,584780847
+健身房,gym,0,,584780848
+洗衣房,laundry,0,,584780849
+纪念品店,souvenir shop,0,,584780851
+自动取款机,ATM,0,,584780852
+国内机场,domestic airport,0,,584780853
+国际机场,international airport,0,,584780854
+候机楼,terminal,0,,584780855
+候机室,airport lounge,0,,584780857
+贵宾室,VIP room,0,,584780858
+免税店,duty-free store,0,,584780860
+洗手间,restroom,0,,42236543
+登机手续办理,check in,0,,567201598
+登机囗,boarding gate,0,,584780861
+登机牌,boarding pass,0,,584780862
+护照检查处,passport control,0,,584780863
+行李领取处,baggage claim area,0,,584780864
+行李车,luggage cart,0,,584780865
+行李牌,luggage tag,0,,584780866
+问讯外,information desk,0,,584780867
+中转处,transfer correspondence,0,,584780868
+迎宾处,greeting arriving,0,,584780869
+购票处,ticket office,0,,584780870
+往返票,round-trip ticket,0,,584780871
+经济舱,economy class,0,,584780872
+商务舱,business class,0,,584780873
+卫星楼,satellite building,0,,584780875
+紧急出口,emergency exit,0,,584780876
+出租车乘车点,taxi pick-up point,0,,584780877
+大巴车乘车点,shuttle bus pick-up point,0,,584780878
+预计时间,estimated time,0,,584780879
+报关物品,goods to declare,0,,584780880
+海关,customs,0,,584780881
+出港,departure,0,,584780882
+进港,arrival,0,,584780884
+酒吧,bar,0,,584780885
+咖啡馆,café,0,,584780845
+银行,bank,0,,584780886
+货币兑换处,money exchange,0,,584780887
+停车场,parking lot,0,,584780846
+加油站,gas station,0,,584780889
+加油站,gas station,0,,584780889
+服务区,service area,0,,584780891
+旅行社,travel agency,0,,584780894
+晴天,sunny,0,,584780896
+多云,cloudy,0,,584780897
+阴夭,overcast,0,,584780898
+小兩,light rain,0,,584780900
+中雨,moderate rain,0,,584780901
+大雨,heavy rain,0,,584780902
+中雪,moderate snow,0,,584780904
+大雪,heavy snow,0,,584780905
+小雪,light snow,0,,584780906
+暴雨,rainstorm,0,,584780908
+雷雨,thunderstorm,0,,584780909
+阵雨,shower,0,,567198753
+毛毛雨,drizzle,0,,584780911
+雨夹雪,sleet,0,,584780912
+零星小雨,occasional drizzles,0,,584780913
+零星小雪,occasional flurries,0,,584780914
+雾,fog,0,,39824745
+雾霾,smog,0,,584780917
+霜冻,frost,0,,584780919
+台风,typhoon,0,,584780920
+沙尘暴,sand storm,0,,584780921

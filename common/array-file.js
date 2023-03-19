@@ -86,7 +86,6 @@ function readArraySync(file, options = {}) {
 
 async function _writeArray(file, array, options = {}) {
   const str = stringify(array, options);
-
   await universalify.fromCallback(fs.writeFile)(file, str, options);
 }
 
@@ -94,8 +93,7 @@ const writeArray = universalify.fromPromise(_writeArray);
 
 function writeArraySync(file, array, options = {}) {
   const str = stringify(array, options);
-  // not sure if fs.writeFileSync returns anything, but just in case
-  return fs.writeFileSync(file, str, options);
+  fs.writeFileSync(file, str, options);
 }
 
 module.exports = {

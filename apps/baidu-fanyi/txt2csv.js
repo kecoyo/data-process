@@ -15,6 +15,8 @@ for (let i = 0; i < lines.length / 2; i++) {
   rows.push(row);
 }
 
-fsExtra.writeCsv(path.join(__dirname, './add_collection.csv'), rows, {
+fsExtra.writeCsvSync(path.join(__dirname, './add_collection.csv'), rows, {
   headers: true,
 });
+
+console.log('OK');

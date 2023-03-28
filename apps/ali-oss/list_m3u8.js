@@ -5,7 +5,7 @@ const OssClient = require('../../common/oss-client');
 const fsExtra = require('../../common/fs-extra');
 const config = require('../../config.json');
 
-const ossClient = new OssClient({ ...config.ossclient, bucket: 'file-video' });
+const ossClient = new OssClient({ ...config.ossclient_lvch, bucket: 'file-video' });
 
 let array = [];
 

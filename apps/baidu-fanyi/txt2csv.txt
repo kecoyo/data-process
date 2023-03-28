@@ -1,0 +1,220 @@
+床单
+sheet
+棉被
+quilt
+枕头
+pillow
+枕套
+pillow case
+床垫
+mattress
+废帘
+curtain
+地毯
+carpet
+抽屉
+drawer
+衣柜
+wardrobe
+毛巾
+towel
+浴缸
+bathtub
+浴帘
+shower curtain
+浴衣
+bathrobe
+拖鞋
+slipper
+护发素
+hair conditioner
+洗发水
+shampoo
+吹风机
+hair drier
+电热壶
+electric kettle
+空调
+air conditioner
+大堂
+lobby
+电梯
+elevator
+青旅
+youth hostel
+别墅
+villa
+连通房
+connecting room
+临近房
+adiacent room
+酒店
+hotel
+汽车旅馆
+mote
+标准间
+standard room
+大床房
+king-size bed room
+单人房
+single room
+早餐券
+breakfast voucher
+西餐庁
+western restaurant
+中餐庁
+Chinese restaurant
+咖啡厅
+café
+停车场
+parking lot
+棋牌室
+chess and card room
+健身房
+gym
+洗衣房
+laundry
+纪念品店
+souvenir shop
+自动取款机
+ATM
+国内机场
+domestic airport
+国际机场
+international airport
+候机楼
+terminal
+候机室
+airport lounge
+贵宾室
+VIP room
+免税店
+duty-free store
+洗手间
+restroom
+登机手续办理
+check in
+登机囗
+boarding gate
+登机牌
+boarding pass
+护照检查处
+passport control
+行李领取处
+baggage claim area
+行李车
+luggage cart
+行李牌
+luggage tag
+问讯外
+information desk
+中转处
+transfer correspondence
+迎宾处
+greeting arriving
+购票处
+ticket office
+往返票
+round-trip ticket
+经济舱
+economy class
+商务舱
+business class
+卫星楼
+satellite building
+紧急出口
+emergency exit
+出租车乘车点
+taxi pick-up point
+大巴车乘车点
+shuttle bus pick-up point
+预计时间
+estimated time
+报关物品
+goods to declare
+海关
+customs
+出港
+departure
+进港
+arrival
+酒吧
+bar
+咖啡馆
+café
+银行
+bank
+货币兑换处
+money exchange
+停车场
+parking lot
+加油站
+gas station
+加油站
+gas station
+服务区
+service area
+旅行社
+travel agency
+晴天
+sunny
+
+多云
+cloudy
+
+阴夭
+overcast
+
+小兩
+light rain
+
+中雨
+moderate rain
+
+大雨
+heavy rain
+
+中雪
+moderate snow
+
+大雪
+heavy snow
+
+小雪
+light snow
+
+暴雨
+rainstorm
+
+雷雨
+thunderstorm
+
+阵雨
+shower
+
+毛毛雨
+drizzle
+
+雨夹雪
+sleet
+
+零星小雨
+occasional drizzles
+
+零星小雪
+occasional flurries
+
+雾
+fog
+
+雾霾
+smog
+
+霜冻
+frost
+
+台风
+typhoon
+
+沙尘暴
+sand storm

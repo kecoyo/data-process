@@ -1,7 +1,7 @@
 const path = require('path');
 const OssClient = require('../../common/oss-client');
 const fsExtra = require('../../common/fs-extra');
-const config = require('../../config.json');
+const config = require('../../config');
 const { createCsvTask } = require('../../common/task');
 const shixunApi = require('./shixunApi');
 const m3u8ToMp4 = require('../../common/ffmpeg');

@@ -1,0 +1,14 @@
+{
+  "apps": [
+    {
+      "name": "shixun_m3u8_mp4",
+      "script": "apps/shixun/m3u8_mp4.js",
+      "exec_mode": "fork",
+      "pid_file": "./logs/shixun_m3u8_mp4.pid",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss",
+      "log_file": "./logs/shixun_m3u8_mp4.log",
+      "error_file": "./logs/shixun_m3u8_mp4-err.log",
+      "out_file": "./logs/shixun_m3u8_mp4-out.log"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const universalify = require('universalify');
 const csv = require('fast-csv');
-const { convertToSyncFunction } = require('converter-to-sync');
+// const { convertToSyncFunction } = require('converter-to-sync');
 
 async function _readCsv(file, options) {
   let list = await new Promise((resolve, reject) => {
@@ -18,7 +18,7 @@ async function _readCsv(file, options) {
 
 const readCsv = universalify.fromPromise(_readCsv);
 
-const readCsvSync = convertToSyncFunction(_readCsv);
+// const readCsvSync = convertToSyncFunction(_readCsv);
 
 async function _writeCsv(file, rows, options = {}) {
   return await new Promise((resolve, reject) => {
@@ -31,11 +31,11 @@ async function _writeCsv(file, rows, options = {}) {
 
 const writeCsv = universalify.fromPromise(_writeCsv);
 
-const writeCsvSync = convertToSyncFunction(_writeCsv);
+// const writeCsvSync = convertToSyncFunction(_writeCsv);
 
 module.exports = {
   readCsv,
-  readCsvSync,
+  // readCsvSync,
   writeCsv,
-  writeCsvSync,
+  // writeCsvSync,
 };

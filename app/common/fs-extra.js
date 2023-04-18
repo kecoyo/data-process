@@ -1,3 +1,4 @@
+const path = require('path');
 const fs = require('fs-extra');
 const arrayFile = require('./array-file');
 const csvFile = require('./csv-file');
@@ -13,3 +14,5 @@ module.exports = {
     return stats.size;
   },
 };
+
+// fs.mkdirpSync('d:\\a\\b\\c\\e\\111.txt');

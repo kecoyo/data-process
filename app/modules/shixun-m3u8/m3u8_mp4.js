@@ -4,7 +4,7 @@ const { Sequelize } = require('sequelize');
 const spawn = require('child_process').spawn;
 const OssClient = require('../../common/oss-client');
 const fsExtra = require('../../common/fs-extra');
-const config = require('../../config');
+const config = require('../../../config');
 
 const WORK_DIR = '/root/shixun_mp4';
 const SHIXUN_DIR = 'shixun/';

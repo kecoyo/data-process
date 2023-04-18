@@ -3,9 +3,12 @@ const _ = require('lodash');
 const { createCsvTask } = require('../../common/task');
 const OssClient = require('../../common/oss-client');
 const fsExtra = require('../../common/fs-extra');
-const config = require('../../config');
+const config = require('../../../config');
 
-const ossClient = new OssClient({ ...config.ossclient_lvch, bucket: 'file-video' });
+const ossClient = new OssClient({
+  ...config.ossclient,
+  bucket: 'file-video',
+});
 
 let array = [];
 
@@ -13,7 +16,7 @@ let array = [];
  *  列出指定前缀的文件列表
  */
 createCsvTask({
-  input: path.join(__dirname, './list_m3u8-input.csv'),
+  input: path.join(__dirname, './list_prefix-input.csv'),
   options: {
     headers: true,
   },
@@ -37,6 +40,6 @@ createCsvTask({
     row.count = count;
   },
   onCompleted: async () => {
-    await fsExtra.writeCsv(path.join(__dirname, './list_m3u8-output.csv'), array, { headers: true });
+    await fsExtra.writeCsv(path.join(__dirname, './list_prefix-output.csv'), array, { headers: true });
   },
 });

@@ -1,23 +1,25 @@
 const path = require('path');
+const shixunApi = require('../../apis/shixunApi');
 const OssClient = require('../../common/oss-client');
 const fsExtra = require('../../common/fs-extra');
-const config = require('../../config');
 const { createCsvTask } = require('../../common/task');
-const shixunApi = require('./shixunApi');
 const { m3u8ToMp4 } = require('../../common/ffmpeg');
 const httpClient = require('../../common/http-client');
+const ljlx = require('../../common/ljlx');
 
-// const WORK_DIR = '/root/shixun_mp4';
-const WORK_DIR = 'D:\\shixun_mp4';
-const SHIXUN_DIR = 'shixun/';
+const argv = process.argv.slice(2);
 
-const ossClient = new OssClient({ ...config.ossclient, bucket: 'file-im' });
+const INPUT_FILE = argv[0] || './m3u8_mp4_510703.csv';
+const WORK_DIR = path.join(ljlx.tempDir, 'shixun_mp4');
+const OSS_DIR = 'shixun/';
+
+const ossClient = new OssClient(ljlx.getOssConfig('file-im'));
 
 /**
  * 不存在的mp4，用m3u8反向生成mp4，并上传当前位置
  */
 createCsvTask({
-  input: path.join(__dirname, './m3u8_mp4_511321.csv'),
+  input: path.join(__dirname, INPUT_FILE),
   options: {
     headers: true,
   },
@@ -49,7 +51,7 @@ createCsvTask({
       await m3u8ToMp4(m3u8, path.join(WORK_DIR, ossFileName));
 
       // upload to oss
-      const ossRelativePath = SHIXUN_DIR + ossFileName;
+      const ossRelativePath = OSS_DIR + ossFileName;
       const localFile = path.join(WORK_DIR, ossFileName);
 
       const fileSize = fsExtra.getFileSize(localFile);

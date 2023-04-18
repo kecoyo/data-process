@@ -4,7 +4,7 @@ const fsExtra = require('../../common/fs-extra');
 const config = require('../../config');
 const { createCsvTask } = require('../../common/task');
 const shixunApi = require('./shixunApi');
-const m3u8ToMp4 = require('../../common/ffmpeg');
+const { m3u8ToMp4 } = require('../../common/ffmpeg');
 const httpClient = require('../../common/http-client');
 
 // const WORK_DIR = '/root/shixun_mp4';
@@ -17,7 +17,7 @@ const ossClient = new OssClient({ ...config.ossclient, bucket: 'file-im' });
  * 不存在的mp4，用m3u8反向生成mp4，并上传当前位置
  */
 createCsvTask({
-  input: path.join(__dirname, './m3u8_mp4.csv'),
+  input: path.join(__dirname, './m3u8_mp4_511321.csv'),
   options: {
     headers: true,
   },

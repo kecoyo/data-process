@@ -15,6 +15,9 @@ const OSS_DIR = 'shixun/';
 
 const ossClient = new OssClient(ljlx.getOssConfig('file-im'));
 
+// 用阿里内网域名
+const internal = ljlx.config('ossclient.internal');
+
 /**
  * 不存在的mp4，用m3u8反向生成mp4，并上传当前位置
  */
@@ -44,7 +47,7 @@ createCsvTask({
       console.log('🚀 ~ get m3u8 url:', video_id);
       let m3u8 = await shixunApi.videoCheck(video_id);
       if (!m3u8) throw new Error('m3u8 not found.');
-      m3u8 = m3u8.replace('http://videobjcdn.lejiaolexue.com', 'https://file-video.oss-cn-beijing.aliyuncs.com');
+      m3u8 = m3u8.replace('http://videobjcdn.lejiaolexue.com', `https://file-video.oss-cn-beijing${internal ? '-internal' : ''}.aliyuncs.com`);
 
       // m3u8 to mp4
       console.log('🚀 ~ m3u8 to mp4:', m3u8);

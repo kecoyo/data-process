@@ -2,38 +2,43 @@
   "apps": [
     {
       "name": "m3u8_mp4_510703",
-      "script": "./apps/shixun/m3u8_mp4.js",
-      "args": "m3u8_mp4_510703.csv",
+      "script": "./app/modules/shixun/m3u8_mp4.js",
+      "args": ["m3u8_mp4_510703.csv"],
       "error_file": "./logs/m3u8_mp4_510703.error.log",
-      "out_file": "./logs/m3u8_mp4_510703.out.log"
+      "out_file": "./logs/m3u8_mp4_510703.out.log",
+      "autorestart": false
     },
     {
       "name": "m3u8_mp4_511321",
-      "script": "./apps/shixun/m3u8_mp4.js",
-      "args": "m3u8_mp4_511321.csv",
+      "script": "./app/modules/shixun/m3u8_mp4.js",
+      "args": ["m3u8_mp4_511321.csv"],
       "error_file": "./logs/m3u8_mp4_511321.error.log",
-      "out_file": "./logs/m3u8_mp4_511321.out.log"
+      "out_file": "./logs/m3u8_mp4_511321.out.log",
+      "autorestart": false
     },
     {
-      "name": "m3u8_mp4_510703",
-      "script": "./apps/shixun/m3u8_mp4.js",
-      "args": "m3u8_mp4_510703.csv",
-      "error_file": "./logs/m3u8_mp4_510703.error.log",
-      "out_file": "./logs/m3u8_mp4_510703.out.log"
+      "name": "m3u8_mp4_511323",
+      "script": "./app/modules/shixun/m3u8_mp4.js",
+      "args": ["m3u8_mp4_511323.csv"],
+      "error_file": "./logs/m3u8_mp4_511323.error.log",
+      "out_file": "./logs/m3u8_mp4_511323.out.log",
+      "autorestart": false
     },
     {
       "name": "m3u8_mp4_511325",
-      "script": "./apps/shixun/m3u8_mp4.js",
-      "args": "m3u8_mp4_511325.csv",
+      "script": "./app/modules/shixun/m3u8_mp4.js",
+      "args": ["m3u8_mp4_511325.csv"],
       "error_file": "./logs/m3u8_mp4_511325.error.log",
-      "out_file": "./logs/m3u8_mp4_511325.out.log"
+      "out_file": "./logs/m3u8_mp4_511325.out.log",
+      "autorestart": false
     },
     {
       "name": "m3u8_mp4_511381",
-      "script": "./apps/shixun/m3u8_mp4.js",
-      "args": "m3u8_mp4_511381.csv",
+      "script": "./app/modules/shixun/m3u8_mp4.js",
+      "args": ["m3u8_mp4_511381.csv"],
       "error_file": "./logs/m3u8_mp4_511381.error.log",
-      "out_file": "./logs/m3u8_mp4_511381.out.log"
+      "out_file": "./logs/m3u8_mp4_511381.out.log",
+      "autorestart": false
     }
   ]
 }

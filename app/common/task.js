@@ -1,6 +1,5 @@
 const fastq = require('fastq');
 const _ = require('lodash');
-const fsExtra = require('./fs-extra');
 
 class Task {
   constructor(config = {}) {
@@ -63,6 +62,7 @@ class Task {
         queue
           .push({ row, i })
           .then(() => {
+            row.errorMsg = '';
             console.log(i, row);
             this.success++;
             if (this.success + this.fail === this.list.length) {
@@ -70,6 +70,7 @@ class Task {
             }
           })
           .catch(err => {
+            row.errorMsg = err.message;
             console.log(i, row);
             if (this.config.showErrorLog) console.log(err);
             this.fail++;
@@ -95,44 +96,4 @@ class Task {
   }
 }
 
-class CsvTask extends Task {
-  async readFile() {
-    this.list = await fsExtra.readCsv(this.config.input, this.config.options);
-  }
-
-  async writeFile() {
-    await fsExtra.writeCsv(this.config.output, this.list, this.config.options);
-  }
-}
-
-function createCsvTask(config) {
-  config = _.defaultsDeep({}, config, {
-    options: {
-      headers: true,
-    },
-  });
-  new CsvTask(config).run();
-}
-
-class ArrayTask extends Task {
-  async readFile() {
-    this.list = await fsExtra.readArray(this.config.input, this.config.options);
-  }
-
-  async writeFile() {
-    await fsExtra.writeArray(this.config.output, this.list, this.config.options);
-  }
-}
-
-function createArrayTask(config) {
-  config = _.defaultsDeep({}, config, {});
-  new ArrayTask(config).run();
-}
-
-module.exports = {
-  Task,
-  CsvTask,
-  createCsvTask,
-  ArrayTask,
-  createArrayTask,
-};
+module.exports = Task;

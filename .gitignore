@@ -15,7 +15,4 @@ yarn.lock
 config.json
 config.js
 
-input-*.txt
-output-*.txt
-input-*.csv
-output-*.csv
+*copy*.*

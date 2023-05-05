@@ -23,6 +23,4 @@ const ljlx = {
   },
 };
 
-console.log('ljlx:', ljlx);
-
 module.exports = ljlx;

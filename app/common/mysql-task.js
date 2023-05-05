@@ -4,28 +4,32 @@ const Task = require('./task');
 const mysql = require('./mysql');
 
 class MysqlTask extends Task {
-  async readFile() {
-    if (typeof this.config.input !== 'function') {
-      throw new Error('config.input is not a fucntion.');
-    }
-    this.list = await this.config.input(mysql);
+  constructor(options) {
+    super(options);
+    this.mysql = mysql;
   }
 
-  async writeFile() {
-    if (typeof this.config.output !== 'function') {
-      throw new Error('config.output is not a fucntion.');
+  async readData() {
+    if (typeof this.options.input === 'string') {
+      this.list = await mysql.query(this.options.input); // sql
+    } else if (typeof this.options.input === 'function') {
+      this.list = await this.options.input(mysql); // function
+    } else {
+      throw new Error('options.input must be a function or string.');
     }
-    // await fsExtra.writeArray(this.config.output, this.list, this.config.options);
   }
 
-  async onCompleted() {
+  async completed() {
+    if (this.options.onCompleted) {
+      await this.options.onCompleted(this.list);
+    }
     await mysql.end();
   }
 }
 
-MysqlTask.createTask = config => {
-  config = _.defaultsDeep({}, config, {});
-  new MysqlTask(config).run();
+MysqlTask.createTask = options => {
+  options = _.defaultsDeep({}, options, {});
+  new MysqlTask(options).run();
 };
 
 module.exports = MysqlTask;

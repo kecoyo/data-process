@@ -3,18 +3,26 @@ const fsExtra = require('./fs-extra');
 const Task = require('./task');
 
 class ArrayTask extends Task {
-  async readFile() {
-    this.list = await fsExtra.readArray(this.config.input, this.config.options);
+  constructor(options) {
+    super(options);
+    // 写回源文件
+    if (!this.options.output) {
+      this.options.output = this.options.input;
+    }
   }
 
-  async writeFile() {
-    await fsExtra.writeArray(this.config.output, this.list, this.config.options);
+  async readData() {
+    this.list = await fsExtra.readArray(this.options.input, this.options.options);
+  }
+
+  async writeData() {
+    await fsExtra.writeArray(this.options.output, this.list, this.options.options);
   }
 }
 
-ArrayTask.createTask = config => {
-  config = _.defaultsDeep({}, config, {});
-  new ArrayTask(config).run();
+ArrayTask.createTask = options => {
+  options = _.defaultsDeep({}, options, {});
+  new ArrayTask(options).run();
 };
 
 module.exports = ArrayTask;

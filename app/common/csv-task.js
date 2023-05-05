@@ -3,22 +3,30 @@ const fsExtra = require('./fs-extra');
 const Task = require('./task');
 
 class CsvTask extends Task {
-  async readFile() {
-    this.list = await fsExtra.readCsv(this.config.input, this.config.options);
+  constructor(options) {
+    super(options);
+    // 写回源文件
+    if (!this.options.output) {
+      this.options.output = this.options.input;
+    }
   }
 
-  async writeFile() {
-    await fsExtra.writeCsv(this.config.output, this.list, this.config.options);
+  async readData() {
+    this.list = await fsExtra.readCsv(this.options.input, this.options.options);
+  }
+
+  async writeData() {
+    await fsExtra.writeCsv(this.options.output, this.list, this.options.options);
   }
 }
 
-CsvTask.createTask = config => {
-  config = _.defaultsDeep({}, config, {
+CsvTask.createTask = options => {
+  options = _.defaultsDeep({}, options, {
     options: {
       headers: true,
     },
   });
-  new CsvTask(config).run();
+  new CsvTask(options).run();
 };
 
 module.exports = CsvTask;

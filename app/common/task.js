@@ -2,96 +2,111 @@ const fastq = require('fastq');
 const _ = require('lodash');
 
 class Task {
-  constructor(config = {}) {
-    this.config = _.defaultsDeep({}, config, {
-      options: {},
+  constructor(options = {}) {
+    this.options = _.defaultsDeep({}, options, {
       concurrency: 10, // 并发数
+      showErrorLog: true, // 显示错误日志
     });
 
-    if (!this.config.input) throw new Error('missing input');
-    if (!this.config.output) {
-      this.config.output = this.config.input;
-    }
-    if (!this.config.processRow) throw new Error('missing processRow(row)');
+    if (!this.options.input) throw new Error('missing input');
 
-    this.startTime = 0;
-    this.startTime = 0;
-    this.success = 0;
-    this.fail = 0;
+    this.startTime = 0; // 开始时间
+    this.endTime = 0; // 结束时间
+    this.success = 0; // 成功个数
+    this.fail = 0; // 失败个数
   }
 
+  /**
+   * 开始运行
+   */
   async run() {
     this.startTime = Date.now();
-    await this.readFile();
+    await this.readData();
     await this.beforeProcess();
-    this.process().then(async () => {
-      await this.afterProcess();
-      await this.writeFile();
-      this.endTime = Date.now();
-      console.log(`成功: ${this.success}, 失败: ${this.fail}, 用时：${(this.endTime - this.startTime) / 1000}s`);
-      await this.onCompleted();
-    });
+    await this.process();
+    await this.afterProcess();
+    await this.writeData();
+    this.endTime = Date.now();
+    console.log(`成功: ${this.success}, 失败: ${this.fail}, 用时：${(this.endTime - this.startTime) / 1000}s`);
+    await this.completed();
   }
 
-  async readFile() {
-    throw new Error('no read file.');
+  async readData() {
+    throw new Error('no read data.');
   }
 
-  async writeFile() {
-    throw new Error('no write file.');
+  async writeData() {
+    // throw new Error('no write data.');
   }
 
-  async beforeProcess() {
-    if (this.config.beforeProcess) {
-      await this.config.beforeProcess(this.list);
-    }
-  }
-
-  async afterProcess() {
-    if (this.config.afterProcess) {
-      await this.config.afterProcess(this.list);
-    }
-  }
-
+  /**
+   * 处理整个过程
+   * @returns
+   */
   async process() {
+    if (this.list.length === 0) {
+      throw new Error('list length must be greater than 0');
+    }
     return new Promise((resolve, reject) => {
-      let concurrency = this.list.length < this.config.concurrency ? this.list.length : this.config.concurrency;
-      const queue = fastq.promise(this, this.processRow, concurrency);
+      let concurrency = this.list.length < this.options.concurrency ? this.list.length : this.options.concurrency;
+      // Creates a new queue.
+      this.queue = fastq.promise(this, this.processRow, concurrency);
       for (let i = 0; i < this.list.length; i++) {
         const row = this.list[i];
-        queue
+        // Add a task at the end of the queue.
+        this.queue
           .push({ row, i })
           .then(() => {
-            row.errorMsg = '';
             console.log(i, row);
             this.success++;
-            if (this.success + this.fail === this.list.length) {
-              resolve(this.success + this.fail);
-            }
           })
           .catch(err => {
-            row.errorMsg = err.message;
             console.log(i, row);
-            if (this.config.showErrorLog) console.log(err);
             this.fail++;
-            if (this.success + this.fail === this.list.length) {
-              resolve(this.success + this.fail);
-            }
+            if (this.options.showErrorLog) console.log(err);
           });
       }
+      // Wait for the queue to be drained.
+      // The returned Promise will be resolved when all tasks in the queue have been processed by a worker.
+      this.queue.drained().then(() => {
+        resolve('Done');
+      });
     });
   }
 
+  /**
+   * 处理每一行，第行是一个任务
+   */
   async processRow({ row, i }) {
-    if (this.config.processRow) {
-      return await this.config.processRow(row, i);
+    if (this.options.processRow) {
+      await this.options.processRow(row, i, this);
     }
-    return true;
   }
 
-  async onCompleted() {
-    if (this.config.onCompleted) {
-      await this.config.onCompleted(this.list);
+  /**
+   * 处理前
+   */
+  async beforeProcess() {
+    if (this.options.onBeforeProcess) {
+      await this.options.onBeforeProcess(this);
+    }
+  }
+
+  /**
+   * 处理后
+   */
+  async afterProcess() {
+    if (this.options.onAfterProcess) {
+      await this.options.onAfterProcess(this);
+    }
+  }
+
+  /**
+   * 处理完成
+   */
+  async completed() {
+    if (this.options.onCompleted) {
+      await this.options.onCompleted(this);
     }
   }
 }

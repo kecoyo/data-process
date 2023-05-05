@@ -11,8 +11,7 @@ yarn-error.log
 *-lock.yaml
 yarn.lock
 
-.env
-config.json
 config.js
+config.local.js
 
 *copy*.*

@@ -25,7 +25,7 @@ async function deleteFn() {
   await sequelize.close();
 }
 
-// select();
+select();
 // insert();
 // update();
-deleteFn();
+// deleteFn();

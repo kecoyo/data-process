@@ -56,12 +56,14 @@ async function findAndCountAll() {
 }
 
 // eslint-disable-next-line wrap-iife
-(async function main() {
+async function main() {
   // await createUser();
   // await createUser2();
   // await updateUser();
   // await deleteUser();
-  // await findAll();
-  await findAndCountAll();
+  await findAll();
+  // await findAndCountAll();
   await sequelize.close();
-})();
+}
+
+main();

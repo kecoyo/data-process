@@ -1,12 +1,12 @@
 const path = require('path');
 const _ = require('lodash');
-const { createCsvTask } = require('../../common/task');
+const CsvTask = require('../../common/csv-task');
 const shixunApi = require('../../common/shixun_api');
 
 /**
  * 师训处理老师更换能力点
  */
-createCsvTask({
+CsvTask.createTask({
   input: path.join(__dirname, './update_points-input.csv'),
   output: path.join(__dirname, './update_points-output.csv'),
   options: {

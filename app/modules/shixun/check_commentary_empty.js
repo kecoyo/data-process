@@ -2,19 +2,19 @@ const path = require('path');
 const axios = require('axios');
 const shixunApi = require('../../apis/shixunApi');
 const { m3u8ToMp4 } = require('../../common/ffmpeg');
-const ljlx = require('../../common/ljlx');
+const config = require('../../common/config');
 const fsExtra = require('../../common/fs-extra');
 const OssClient = require('../../common/oss-client');
 const CsvTask = require('../../common/csv-task');
 const mysql = require('../../common/mysql');
 
-const WORK_DIR = path.join(ljlx.tempDir, 'shixun_mp4');
+const WORK_DIR = path.join(config.tempDir, 'shixun_mp4');
 const OSS_DIR = 'shixun/';
 
-const ossClient = new OssClient(ljlx.getOssConfig('file-im'));
+const ossClient = new OssClient({ ...config.ossclient, bucket: 'file-im' });
 
 // 用阿里内网域名
-const internal = ljlx.config('ossclient.internal');
+const internal = config.get('ossclient.internal');
 
 /**
  * 检查听评课上报mp4字段为空，用m3u8生成mp4
@@ -44,7 +44,7 @@ CsvTask.createTask({
 
       console.log('🚀 ~ get m3u8 url:', video_id);
       let m3u8 = await shixunApi.videoCheck(video_id);
-      if (!m3u8) throw new Error('m3u8 not found.');
+      if (!m3u8) throw new Error('m3u8 not found');
       m3u8 = m3u8.replace('http://videobjcdn.lejiaolexue.com', `https://file-video.oss-cn-beijing${internal ? '-internal' : ''}.aliyuncs.com`);
 
       // m3u8 to mp4
@@ -55,8 +55,10 @@ CsvTask.createTask({
       const ossRelativePath = OSS_DIR + ossFileName;
       const localFile = path.join(WORK_DIR, ossFileName);
 
+      if (!fsExtra.existsSync(localFile)) throw new Error('mp4 not found');
+
       const fileSize = fsExtra.getFileSize(localFile);
-      if (fileSize === 0) throw new Error('file size is 0.');
+      if (fileSize === 0) throw new Error('mp4 file size is 0');
 
       console.log('🚀 ~ upload to oss:', ossRelativePath);
       const ret = await ossClient.put(ossRelativePath, localFile, {

@@ -5,7 +5,7 @@ const Task = require('./task');
 class CsvTask extends Task {
   constructor(options) {
     super(options);
-    // 写回源文件
+    // 默认写回源文件
     if (!this.options.output) {
       this.options.output = this.options.input;
     }

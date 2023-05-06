@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
-const { createCsvTask } = require('../../common/task');
+const CsvTask = require('../../common/csv-task');
 
 // const gid = '2657283'; // 常用句子
 const gid = '0'; // 默认分组
@@ -36,7 +36,7 @@ function addCollection(fanyi_src, fanyi_dst, direction = 'en2zh') {
 
 /**
  */
-createCsvTask({
+CsvTask.createTask({
   input: path.join(__dirname, './add_collection.csv'),
   options: {
     headers: true,

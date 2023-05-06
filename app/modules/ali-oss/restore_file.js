@@ -1,14 +1,14 @@
 const path = require('path');
 const OssClient = require('../../common/oss-client');
-const { createCsvTask } = require('../../common/task');
-const config = require('../../../config');
+const CsvTask = require('../../common/csv-task');
+const config = require('../../common/config');
 
-const ossClient = new OssClient(Object.assign({}, config.ossclient_lvch, { bucket: 'file-video' }));
+const ossClient = new OssClient({ ...config.ossclient, bucket: 'file-video' });
 
 /**
  * OSS恢复归档文件
  */
-createCsvTask({
+CsvTask.createTask({
   input: path.join(__dirname, './restore_file-input.csv'),
   processRow: async (row, i) => {
     if (!row.oss_file) {

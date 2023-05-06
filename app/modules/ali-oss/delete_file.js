@@ -1,14 +1,14 @@
 const path = require('path');
-const { createCsvTask } = require('../../common/task');
+const CsvTask = require('../../common/csv-task');
 const OssClient = require('../../common/oss-client');
-const config = require('../../../config');
+const config = require('../../common/config');
 
 const ossClient = new OssClient({ ...config.ossclient, bucket: 'file-im' });
 
 /**
  * 删除列表中文件
  */
-createCsvTask({
+CsvTask.createTask({
   input: path.join(__dirname, './delete_file-data.csv'),
   options: {
     headers: true,

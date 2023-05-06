@@ -8,11 +8,9 @@ module.exports = {
   ...arrayFile,
   ...csvFile,
 
-  // 获取文件大小，返回文件大小（字节）
+  // 获取文件大小，返回文件大小
   getFileSize(filePath) {
     const stats = fs.statSync(filePath);
     return stats.size;
   },
 };
-
-// fs.mkdirpSync('d:\\a\\b\\c\\e\\111.txt');

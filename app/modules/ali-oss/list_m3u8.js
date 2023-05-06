@@ -1,18 +1,18 @@
 const path = require('path');
 const _ = require('lodash');
-const { createCsvTask } = require('../../common/task');
+const CsvTask = require('../../common/csv-task');
 const OssClient = require('../../common/oss-client');
 const fsExtra = require('../../common/fs-extra');
-const config = require('../../../config');
+const config = require('../../common/config');
 
-const ossClient = new OssClient({ ...config.ossclient_lvch, bucket: 'file-video' });
+const ossClient = new OssClient({ ...config.ossclient, bucket: 'file-video' });
 
 let array = [];
 
 /**
  *  列出指定前缀的文件列表
  */
-createCsvTask({
+CsvTask.createTask({
   input: path.join(__dirname, './list_m3u8-input.csv'),
   options: {
     headers: true,

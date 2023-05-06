@@ -1,7 +1,7 @@
 const { createPool } = require('mysql2');
-const config = require('../../config');
+const config = require('./config');
 
-const pool = createPool(config.mysql).promise();
+const pool = createPool(config.get('mysql')).promise();
 
 const mysql = {
   /**

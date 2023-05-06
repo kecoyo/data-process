@@ -6,6 +6,9 @@
       "args": [],
       "error_file": "./logs/check_commentary_empty.error.log",
       "out_file": "./logs/check_commentary_empty.out.log",
+      "env": {
+        "NODE_ENV": "production"
+      },
       "autorestart": false
     }
   ]

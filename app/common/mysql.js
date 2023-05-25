@@ -1,30 +1,37 @@
 const { createPool } = require('mysql2');
-const config = require('./config');
 
-const pool = createPool(config.get('mysql')).promise();
+/**
+ * MySQL数据库
+ */
+class MySQL {
+  constructor(config) {
+    this.pool = createPool(config).promise();
+  }
 
-const mysql = {
   /**
    * 获取当前连接池
    * @returns
    */
   getPool() {
-    return pool;
-  },
+    return this.pool;
+  }
+
   /**
    * 从连接池中获取一个连接
    * @returns
    */
   getConnection() {
-    return pool.getConnection();
-  },
+    return this.pool.getConnection();
+  }
+
   /**
    * 关闭连接池
    * @returns
    */
   end() {
-    return pool.end();
-  },
+    return this.pool.end();
+  }
+
   /**
    * 执行SQL语句，优势是更灵活，可以用??代替表名、字段、索引名；用?代替数据
    * @param {*} sql
@@ -32,8 +39,9 @@ const mysql = {
    * @returns
    */
   query(sql, values) {
-    return pool.query(sql, values).then(res => res[0]);
-  },
+    return this.pool.query(sql, values).then(res => res[0]);
+  }
+
   /**
    * 用于执行SQL语句，利用MySQL的PreparedStatement机制来预编译SQL语句，优势是数据库原生支持的预编译机制，性能更高
    * @param {*} sql
@@ -41,8 +49,8 @@ const mysql = {
    * @returns
    */
   execute(sql, values) {
-    return pool.execute(sql, values).then(res => res[0]);
-  },
-};
+    return this.pool.execute(sql, values).then(res => res[0]);
+  }
+}
 
-module.exports = mysql;
+module.exports = MySQL;

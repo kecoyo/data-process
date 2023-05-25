@@ -1,9 +1,9 @@
 const { createPool } = require('mysql2');
 
 /**
- * MySQL数据库
+ * MySQL客户端
  */
-class MySQL {
+class MysqlClient {
   constructor(config) {
     this.pool = createPool(config).promise();
   }
@@ -53,4 +53,4 @@ class MySQL {
   }
 }
 
-module.exports = MySQL;
+module.exports = MysqlClient;

@@ -5,7 +5,7 @@ const { m3u8ToMp4 } = require('../common/ffmpeg');
 const config = require('../common/config');
 const fsExtra = require('../common/fs-extra');
 const OssClient = require('../common/oss-client');
-const MySQLTask = require('../common/mysql-task');
+const MysqlTask = require('../common/mysql-task');
 
 const WORK_DIR = path.join(config.tempDir, 'shixun_mp4');
 const OSS_DIR = 'shixun/';
@@ -18,7 +18,7 @@ const internal = config.get('ossclient.internal');
 /**
  * 检查听评课上报mp4字段为空，用m3u8生成mp4
  */
-MySQLTask.createTask({
+MysqlTask.createTask({
   input: async mysql => {
     return await mysql.query(`select c.* from commentary_course c
       where c.theme_id = 10042 and c.status = 200 and c.county in (510703,511321,511323,511325,511381)

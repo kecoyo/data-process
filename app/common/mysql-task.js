@@ -1,13 +1,13 @@
 const _ = require('lodash');
 const fsExtra = require('./fs-extra');
 const Task = require('./task');
-const MySQL = require('./mysql');
+const MysqlClient = require('./mysql-client');
 const config = require('./config');
 
-class MySQLTask extends Task {
+class MysqlTask extends Task {
   constructor(options) {
     super(options);
-    this.mysql = new MySQL(options.mysql);
+    this.mysql = new MysqlClient(options.options);
   }
 
   async readData() {
@@ -26,11 +26,11 @@ class MySQLTask extends Task {
   }
 }
 
-MySQLTask.createTask = options => {
+MysqlTask.createTask = options => {
   options = _.defaultsDeep({}, options, {
-    mysql: config.get('mysql'),
+    options: config.get('mysql'), // 数据库连接配置
   });
-  new MySQLTask(options).run();
+  new MysqlTask(options).run();
 };
 
-module.exports = MySQLTask;
+module.exports = MysqlTask;

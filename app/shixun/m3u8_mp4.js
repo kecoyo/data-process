@@ -1,11 +1,11 @@
 const path = require('path');
-const shixunApi = require('../../apis/shixunApi');
-const OssClient = require('../../common/oss-client');
-const fsExtra = require('../../common/fs-extra');
-const CsvTask = require('../../common/csv-task');
-const { m3u8ToMp4 } = require('../../common/ffmpeg');
-const httpClient = require('../../common/http-client');
-const config = require('../../common/config');
+const shixunApi = require('../apis/shixunApi');
+const OssClient = require('../common/oss-client');
+const fsExtra = require('../common/fs-extra');
+const CsvTask = require('../common/csv-task');
+const { m3u8ToMp4 } = require('../common/ffmpeg');
+const httpClient = require('../common/http-client');
+const config = require('../common/config');
 
 const argv = process.argv.slice(2);
 

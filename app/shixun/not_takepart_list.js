@@ -1,8 +1,8 @@
 /* eslint-disable dot-notation */
 const path = require('path');
 const axios = require('axios');
-const CsvTask = require('../../common/csv-task');
-const shixunApi = require('../../apis/shixunApi');
+const CsvTask = require('../common/csv-task');
+const shixunApi = require('../apis/shixunApi');
 
 /**
  * 不参与互评名单，填充用户的绑定信息

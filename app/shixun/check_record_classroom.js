@@ -1,11 +1,11 @@
 const path = require('path');
 const axios = require('axios');
-const shixunApi = require('../../apis/shixunApi');
-const { m3u8ToMp4 } = require('../../common/ffmpeg');
-const config = require('../../common/config');
-const fsExtra = require('../../common/fs-extra');
-const OssClient = require('../../common/oss-client');
-const MySQLTask = require('../../common/mysql-task');
+const shixunApi = require('../apis/shixunApi');
+const { m3u8ToMp4 } = require('../common/ffmpeg');
+const config = require('../common/config');
+const fsExtra = require('../common/fs-extra');
+const OssClient = require('../common/oss-client');
+const MySQLTask = require('../common/mysql-task');
 
 // 命令行参数
 const argv = process.argv.slice(2);

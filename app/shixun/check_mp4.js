@@ -1,6 +1,6 @@
 const path = require('path');
 const axios = require('axios');
-const CsvTask = require('../../common/csv-task');
+const CsvTask = require('../common/csv-task');
 
 /**
  * 检查mp4是否存在

@@ -1,7 +1,7 @@
 const path = require('path');
-const OssClient = require('../../common/oss-client');
-const CsvTask = require('../../common/csv-task');
-const config = require('../../common/config');
+const OssClient = require('../common/oss-client');
+const CsvTask = require('../common/csv-task');
+const config = require('../common/config');
 
 const ossClient = new OssClient({ ...config.ossclient, bucket: 'file-video' });
 

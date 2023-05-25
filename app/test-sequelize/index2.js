@@ -1,6 +1,6 @@
 /* eslint-disable quotes */
 const { Op } = require('sequelize');
-const sequelize = require('../../common/sequelize');
+const sequelize = require('../common/sequelize');
 const { User } = require('./define-models');
 
 // Find all users

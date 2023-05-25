@@ -1,5 +1,5 @@
 /* eslint-disable quotes */
-const sequelize = require('../../common/sequelize');
+const sequelize = require('../common/sequelize');
 
 async function select() {
   const res = await sequelize.query('select * from t_product');

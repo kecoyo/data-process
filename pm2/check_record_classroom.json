@@ -2,7 +2,7 @@
   "apps": [
     {
       "name": "check_record_classroom-1",
-      "script": "./app/modules/shixun/check_record_classroom.js",
+      "script": "./app/shixun/check_record_classroom.js",
       "args": ["1000", "1"],
       "error_file": "./logs/check_record_classroom.1.error.log",
       "out_file": "./logs/check_record_classroom.1.out.log",
@@ -14,7 +14,7 @@
     },
     {
       "name": "check_record_classroom-2",
-      "script": "./app/modules/shixun/check_record_classroom.js",
+      "script": "./app/shixun/check_record_classroom.js",
       "args": ["1000", "2"],
       "error_file": "./logs/check_record_classroom.2.error.log",
       "out_file": "./logs/check_record_classroom.2.out.log",
@@ -25,7 +25,7 @@
     },
     {
       "name": "check_record_classroom-3",
-      "script": "./app/modules/shixun/check_record_classroom.js",
+      "script": "./app/shixun/check_record_classroom.js",
       "args": ["1000", "3"],
       "error_file": "./logs/check_record_classroom.3.error.log",
       "out_file": "./logs/check_record_classroom.3.out.log",
@@ -36,7 +36,7 @@
     },
     {
       "name": "check_record_classroom-4",
-      "script": "./app/modules/shixun/check_record_classroom.js",
+      "script": "./app/shixun/check_record_classroom.js",
       "args": ["1000", "4"],
       "error_file": "./logs/check_record_classroom.4.error.log",
       "out_file": "./logs/check_record_classroom.4.out.log",

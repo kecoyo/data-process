@@ -1,5 +1,5 @@
 /* eslint-disable quotes */
-const mysql = require('../../common/mysql');
+const mysql = require('../common/mysql');
 
 async function select() {
   const res = await mysql.query('select * from t_product');

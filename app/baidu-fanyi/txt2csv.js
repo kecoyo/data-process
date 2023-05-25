@@ -1,5 +1,5 @@
 const path = require('path');
-const fsExtra = require('../../common/fs-extra');
+const fsExtra = require('../common/fs-extra');
 
 const content = fsExtra.readFileSync(path.join(__dirname, './txt2csv.txt'), 'utf-8');
 

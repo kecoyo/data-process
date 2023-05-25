@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
-const CsvTask = require('../../common/csv-task');
+const CsvTask = require('../common/csv-task');
 
 // const gid = '2657283'; // 常用句子
 const gid = '0'; // 默认分组

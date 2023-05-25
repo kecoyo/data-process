@@ -1,11 +1,11 @@
 const path = require('path');
 const axios = require('axios');
-const shixunApi = require('../../apis/shixunApi');
-const { m3u8ToMp4 } = require('../../common/ffmpeg');
-const config = require('../../common/config');
-const fsExtra = require('../../common/fs-extra');
-const OssClient = require('../../common/oss-client');
-const MySQLTask = require('../../common/mysql-task');
+const shixunApi = require('../apis/shixunApi');
+const { m3u8ToMp4 } = require('../common/ffmpeg');
+const config = require('../common/config');
+const fsExtra = require('../common/fs-extra');
+const OssClient = require('../common/oss-client');
+const MySQLTask = require('../common/mysql-task');
 
 const WORK_DIR = path.join(config.tempDir, 'shixun_mp4');
 const OSS_DIR = 'shixun/';

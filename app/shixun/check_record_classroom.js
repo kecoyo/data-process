@@ -47,4 +47,9 @@ MysqlTask.createTask({
       throw err;
     }
   },
+  onCompleted: async ({ list }) => {
+    await fsExtra.writeCsv(path.join(__dirname, './check_record_classroom.csv'), list, {
+      headers: true,
+    });
+  },
 });

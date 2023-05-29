@@ -5,6 +5,8 @@ const config = require('../common/config');
 const fsExtra = require('../common/fs-extra');
 const OssClient = require('../common/oss-client');
 const MysqlTask = require('../common/mysql-task');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const csv = require('@fast-csv/format');
 
 // 命令行参数
 const argv = process.argv.slice(2);
@@ -15,6 +17,10 @@ const pageNum = argv[1] || 1;
 const ossClient = new OssClient({ ...config.ossclient, bucket: 'file-im' });
 // 用阿里内网域名
 const internal = config.get('ossclient.internal');
+
+// 创建一个可以写入的Csv流
+const csvStream = csv.format({ headers: true });
+csvStream.pipe(fsExtra.createWriteStream(path.join(__dirname, './check_record_classroom.csv'), { encoding: 'utf8' }));
 
 /**
  * 检查听评课上报mp4是否存在
@@ -31,25 +37,18 @@ MysqlTask.createTask({
   },
   // concurrency: 1,
   processRow: async (row, i) => {
-    // try {
-    //   let res = await axios.head(row.mp4url);
-    //   row.status = res.status; // 200
-    //   // row.status = 'success';
-    // } catch (err) {
-    //   row.status = err.message;
-    //   throw err;
-    // }
     try {
       let res = await axios.head(row.mp4url);
       row.status = res.status; // 200
+      csvStream.write(row);
     } catch (err) {
       row.status = err.response.status; // 404
+      csvStream.write(row);
       throw err;
     }
   },
   onCompleted: async ({ list }) => {
-    await fsExtra.writeCsv(path.join(__dirname, './check_record_classroom.csv'), list, {
-      headers: true,
-    });
+    // 结束写入
+    csvStream.end();
   },
 });

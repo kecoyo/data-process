@@ -1,15 +1,12 @@
 const axios = require('axios');
 const _ = require('lodash');
+const config = require('../common/config');
 
 const headers = {
-  Cookie: '',
+  Cookie: config.get('Cookie'),
 };
 
 const evaluationApi = {
-  addHeader(key, value) {
-    headers[key] = value;
-  },
-
   /**
    * 添加新评价类型
    */

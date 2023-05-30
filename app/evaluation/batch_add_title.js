@@ -12,12 +12,6 @@ const TYPE_MAP = {
   家育: 6,
 };
 
-// Cookie
-evaluationApi.addHeader(
-  'Cookie',
-  'sc1=9ABDCAA9B26494640AAC00BDDCEB87CB6FC4A6C4aEt8MgbpCp3IimkDJlxg6VMjbxWwYAX%2ft1yU0NKPu0s0QRXPnTtmNjC%2bqVOQrkrxGOjik4IKmjLJgSNY%2f3FZbO50mLHgjeyC9gYFKlYOzjSDdPYG4XIVSTXynW3rH2ieD8NLho6ztgznz5ZLKw%2fhnNOH5iDpzZujvSCU6%2b1%2b3bWxUP7GSRNfbEoqptbEOedhV%2bCdzbNtkecXLCqa'
-);
-
 /**
  * 批量添加新评价类型
  */

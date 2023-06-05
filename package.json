@@ -12,18 +12,23 @@
     "config": "^3.3.9",
     "converter-to-sync": "^1.1.9",
     "exceljs": "^4.3.0",
+    "extract-zip": "^2.0.1",
     "fast-csv": "^4.3.6",
     "fastq": "^1.13.0",
     "ffmpeg": "^0.0.4",
     "fluent-ffmpeg": "^2.1.2",
     "fs-extra": "^10.1.0",
+    "heic": "^0.0.5",
     "jeselvmo": "^2.0.7",
     "lodash": "^4.17.21",
     "mysql2": "^2.3.3",
     "node-schedule": "^2.1.1",
+    "read-chunk": "^4.0.3",
+    "readdirp": "^3.6.0",
     "redis": "^4.5.1",
     "sequelize": "^6.27.0",
-    "universalify": "^2.0.0"
+    "universalify": "^2.0.0",
+    "util": "^0.12.5"
   },
   "devDependencies": {
     "eslint": "^8.35.0",
@@ -33,7 +38,10 @@
   "eslintConfig": {
     "extends": [
       "eslint-config-ljlx"
-    ]
+    ],
+    "rules": {
+      "import/no-extraneous-dependencies": 0
+    }
   },
   "prettier": "prettier-config-ljlx"
 }

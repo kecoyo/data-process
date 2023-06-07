@@ -9,7 +9,7 @@ module.exports = {
   ...arrayFile,
   ...csvFile,
 
-  readdirp: readdirp,
+  readdirp: readdirp.promise,
 
   // 获取文件大小，返回文件大小
   getFileSize(filePath) {

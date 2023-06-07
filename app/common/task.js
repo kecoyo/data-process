@@ -8,8 +8,6 @@ class Task {
       showErrorLog: true, // 显示错误日志
     });
 
-    if (!this.options.input) throw new Error('missing input');
-
     this.startTime = 0; // 开始时间
     this.endTime = 0; // 结束时间
     this.success = 0; // 成功个数
@@ -32,7 +30,11 @@ class Task {
   }
 
   async readData() {
-    throw new Error('no read data.');
+    if (typeof this.options.input === 'function') {
+      this.list = await this.options.input(this); // function
+    } else {
+      throw new Error('options.input must be a function.');
+    }
   }
 
   async writeData() {
@@ -44,10 +46,11 @@ class Task {
    * @returns
    */
   async process() {
-    if (this.list.length === 0) {
-      throw new Error('list length must be greater than 0');
-    }
     return new Promise((resolve, reject) => {
+      if (this.list.length === 0) {
+        resolve('Empty');
+        return;
+      }
       let concurrency = this.list.length < this.options.concurrency ? this.list.length : this.options.concurrency;
       // Creates a new queue.
       this.queue = fastq.promise(this, this.processRow, concurrency);
@@ -110,5 +113,10 @@ class Task {
     }
   }
 }
+
+Task.createTask = options => {
+  options = _.defaultsDeep({}, options);
+  new Task(options).run();
+};
 
 module.exports = Task;

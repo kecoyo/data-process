@@ -1,37 +1,29 @@
-/* eslint-disable  */
 const path = require('path');
-const CsvTask = require('../common/csv-task');
-const Convert = require('heic');
-const fsExtra = require('../common/fs-extra');
-const util = require('util');
+const Task = require('../common/task');
+const fs = require('../common/fs-extra');
+const { spawn } = require('../common/child_process');
 
-const convert = new Convert();
-
-// const options = {
-//   foo: { type: 'boolean', short: 'f' },
-//   bar: { type: 'string' },
-// };
-// const { values } = util.parseArgs({ options, tokens: true });
+const rootPath = 'D:\\heic';
 
 /**
  * 批量heic图片转jpg
  */
-CsvTask.createTask({
-  input: path.join(__dirname, './heic2jpg.csv'),
+Task.createTask({
+  input: async () => {
+    const list = await fs.readdirp(rootPath, { fileFilter: '*.heic' });
+    return list;
+  },
   concurrency: 1,
   processRow: async (row, i) => {
-    // if (row.status === 'OK') return;
-    try {
-      // let exists = fsExtra.existsSync(row.heicfile);
-      // if (!exists) throw new Error('heicfile does not exist');
-      // .HEIC FILE -> .JPG FILE
-      // await convert.fileToFile(row.heicfile);
-      // 删除heic文件
-      // fsExtra.removeSync(row.heicfile);
-      // row.status = 'OK';
-    } catch (err) {
-      row.status = err.message;
-      throw err;
-    }
+    const heicFile = row.fullPath;
+    const heicFileName = row.basename;
+
+    const currPath = path.dirname(heicFile);
+    const fileName = heicFileName.substring(0, heicFileName.lastIndexOf('.'));
+
+    const jpgFileName = fileName + '.jpg';
+    const jpgFile = path.join(currPath, jpgFileName);
+
+    await spawn('magick', [row.fullPath, '-quality', '90%', jpgFile]);
   },
 });

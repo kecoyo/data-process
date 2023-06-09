@@ -5,21 +5,21 @@ const fs = require('../common/fs-extra');
 const { spawn } = require('../common/child_process');
 
 const options = {
-  rootDir: { type: 'string', default: 'D:\\heic' },
-  fileFilter: { type: 'string', default: '*.heic' },
-  outExtName: { type: 'string', default: '.jpg' },
-  outQuality: { type: 'string', default: '90%' },
-  outSuffix: { type: 'string', default: '' },
+  'root-dir': { type: 'string', default: 'D:\\heic' },
+  'file-filter': { type: 'string', default: '*.heic' },
+  'out-ext-name': { type: 'string', default: '.jpg' },
+  'out-quality': { type: 'string', default: '90%' },
+  'out-suffix': { type: 'string', default: '' },
 };
-const args = util.parseArgs({ options }).values;
-console.log('args:', JSON.stringify(args));
+const { values, tokens } = util.parseArgs({ options, tokens: true });
+console.log('values:', JSON.stringify(values));
 
 /**
  * 批量heic图片转jpg
  */
 Task.createTask({
   input: async () => {
-    const list = await fs.readdirp(args.rootDir, { fileFilter: args.fileFilter });
+    const list = await fs.readdirp(values['root-dir'], { fileFilter: values['file-filter'] });
     return list.map(entry => ({ fromFile: entry.fullPath }));
   },
   // concurrency: 1,
@@ -29,10 +29,10 @@ Task.createTask({
     const curDir = path.dirname(fromFile);
     const fileName = fromFileName.replace(path.extname(fromFile), '');
 
-    const toFileName = fileName + args.outSuffix + args.outExtName;
+    const toFileName = fileName + values['out-suffix'] + values['out-ext-name'];
     const toFile = path.join(curDir, toFileName);
 
-    await spawn('magick', [fromFile, '-quality', args.outQuality, toFile]);
+    await spawn('magick', [fromFile, '-quality', values['out-quality'], toFile]);
 
     row.toFile = toFile;
   },

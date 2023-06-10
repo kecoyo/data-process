@@ -5,10 +5,11 @@ const fs = require('../common/fs-extra');
 const { spawn } = require('../common/child_process');
 
 const options = {
-  'root-dir': { type: 'string', default: 'D:\\heic' },
+  'src-dir': { type: 'string', default: 'E:\\我的相册\\来自：iPhone XR\\2022' },
   'file-filter': { type: 'string', default: '*.heic' },
-  'out-ext-name': { type: 'string', default: '.jpg' },
-  'out-quality': { type: 'string', default: '90%' },
+  'out-dir': { type: 'string', default: 'E:\\我的相册\\来自：iPhone XR\\heic' },
+  'out-extname': { type: 'string', default: '.jpg' },
+  'out-quality': { type: 'string', default: '85' },
   'out-suffix': { type: 'string', default: '' },
 };
 const { values, tokens } = util.parseArgs({ options, tokens: true });
@@ -19,21 +20,29 @@ console.log('values:', JSON.stringify(values));
  */
 Task.createTask({
   input: async () => {
-    const list = await fs.readdirp(values['root-dir'], { fileFilter: values['file-filter'] });
-    return list.map(entry => ({ fromFile: entry.fullPath }));
+    const list = await fs.readdirp(values['src-dir'], { fileFilter: values['file-filter'] });
+    return list.map(entry => ({ srcFile: entry.fullPath }));
   },
   // concurrency: 1,
   processRow: async (row, i) => {
-    const fromFile = row.fromFile;
-    const fromFileName = path.basename(fromFile);
-    const curDir = path.dirname(fromFile);
-    const fileName = fromFileName.replace(path.extname(fromFile), '');
+    const srcFile = row.srcFile;
+    const srcFileName = path.basename(srcFile);
+    const srcDir = path.dirname(srcFile);
 
-    const toFileName = fileName + values['out-suffix'] + values['out-ext-name'];
-    const toFile = path.join(curDir, toFileName);
+    // 文件名
+    const fileName = srcFileName.replace(path.extname(srcFile), '');
 
-    await spawn('magick', [fromFile, '-quality', values['out-quality'], toFile]);
+    // 没有指定输出目录，输出到源目录
+    const outDir = values['out-dir'] || srcDir;
 
-    row.toFile = toFile;
+    // 确保目录存在
+    fs.ensureDirSync(outDir);
+
+    const outFileName = fileName + values['out-suffix'] + values['out-extname'];
+    const outFile = path.join(outDir, outFileName);
+
+    await spawn('magick', [srcFile, '-quality', values['out-quality'], outFile]);
+
+    row.outFile = outFile;
   },
 });

@@ -1,65 +1,68 @@
 const path = require('path');
-const CsvTask = require('../common/csv-task');
-const Convert = require('heic');
+const Task = require('../common/task');
 const fs = require('../common/fs-extra');
 const util = require('util');
 const extract = require('extract-zip');
+const { spawn } = require('../common/child_process');
 
-const convert = new Convert();
+const options = {
+  'src-dir': { type: 'string', default: 'E:\\我的相册\\来自：iPhone XR\\2022' },
+  'out-dir': { type: 'string', default: 'E:\\我的相册\\来自：iPhone XR\\heic' },
+  'out-extname': { type: 'string', default: '.jpg' },
+  'out-quality': { type: 'string', default: '85' },
+  'out-suffix': { type: 'string', default: '' },
+};
+const { values, tokens } = util.parseArgs({ options, tokens: true });
+console.log('values:', JSON.stringify(values));
 
 /**
- * 批量heic图片转jpg
+ * 批量livp图片转heic
  */
-CsvTask.createTask({
-  input: path.join(__dirname, './livp2jpg.csv'),
+Task.createTask({
+  input: async () => {
+    const list = await fs.readdirp(values['src-dir'], { fileFilter: '*.livp' });
+    return list.map(entry => ({ srcFile: entry.fullPath }));
+  },
   // concurrency: 1,
   processRow: async (row, i) => {
-    if (row.status === 'OK') return;
-    try {
-      const livpFile = row.fullPath;
-      const name = row.basename.replace('.livp', '');
-      const currDir = path.dirname(livpFile); // 当前目录
-      const tempDir = path.join(currDir, name); // 临时目录
+    const srcFile = row.srcFile;
+    const srcFileName = path.basename(srcFile);
+    const srcDir = path.dirname(srcFile);
 
-      // 确保临时目录存在
-      fs.ensureDirSync(tempDir);
+    // 文件名
+    const fileName = srcFileName.replace(path.extname(srcFile), '');
 
-      // livp to zip
-      const zipFileName = name + '.zip';
-      const zipFile = path.join(tempDir, zipFileName);
-      fs.copyFileSync(livpFile, zipFile);
+    // 输出目录，没有，输出到源目录
+    const outDir = values['out-dir'] || srcDir;
+    // 确保输出目录存在
+    fs.ensureDirSync(outDir);
 
-      // 解压zip
-      await extract(zipFile, { dir: tempDir });
+    // 临时目录
+    const tempDir = path.join(outDir, fileName);
+    // 确保临时目录存在
+    fs.ensureDirSync(tempDir);
 
-      // 列出output目录中所有文件
-      const files = await fs.readdirp.promise(tempDir);
+    // livp to zip
+    const zipFileName = fileName + '.zip';
+    const zipFile = path.join(tempDir, zipFileName);
+    fs.copyFileSync(srcFile, zipFile);
 
-      // 找出heic文件
-      let heicFile = files.filter(entry => entry.fullPath.endsWith('.heic'))[0].fullPath;
-      let newHeicFile = path.join(tempDir, name + '.heic');
-      fs.renameSync(heicFile, newHeicFile);
-      heicFile = newHeicFile;
+    // 解压zip到临时目录
+    await extract(zipFile, { dir: tempDir });
 
-      // 将heic文件拷贝到外层目录，修改名字
-      // fs.copySync(heicFile.fullPath, path.join(workDir, row.basename.replace('.livp', '.heic')));
+    // 找出heic/jpeg文件
+    const findFiles = await fs.readdirp(tempDir, { fileFilter: ['*.heic', '*.jpeg', '*.jpg', '*.png'] });
+    if (findFiles.length > 0) {
+      let imgFile = findFiles[0].fullPath;
 
-      // .HEIC FILE -> .JPG FILE
-      await convert.fileToFile(heicFile);
+      // 转换格式，并压缩
+      const outFileName = fileName + values['out-suffix'] + values['out-extname'];
+      const outFile = path.join(outDir, outFileName);
+      await spawn('magick', [imgFile, '-quality', values['out-quality'], outFile]);
+      row.outFile = outFile;
 
-      const jpgFileName = name + '.jpg';
-      const jpgFile = path.join(tempDir, jpgFileName);
-
-      // 将heic文件拷贝到外层目录，修改名字
-      fs.copySync(jpgFile, path.join(currDir, jpgFileName));
-
-      // 删除output目录中的文件
+      // 删除临时目录
       fs.removeSync(tempDir);
-
-      // row.status = 'OK';
-    } catch (err) {
-      row.status = err.message;
-      throw err;
     }
   },
 });

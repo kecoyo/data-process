@@ -1,18 +1,19 @@
 const path = require('path');
+const util = require('util');
 const Task = require('../common/task');
 const fs = require('../common/fs-extra');
-const util = require('util');
-const extract = require('extract-zip');
 const { spawn } = require('../common/child_process');
+const extract = require('extract-zip');
 
 const options = {
-  'src-dir': { type: 'string', default: 'E:\\我的相册\\来自：iPhone XR\\2022' },
-  'out-dir': { type: 'string', default: 'E:\\我的相册\\来自：iPhone XR\\heic' },
+  'src-dir': { type: 'string', default: 'D:\\livp' },
+  'file-filter': { type: 'string', default: '*.livp' },
+  'out-dir': { type: 'string', default: 'D:\\livp\\jpg' },
   'out-extname': { type: 'string', default: '.jpg' },
-  'out-quality': { type: 'string', default: '85' },
   'out-suffix': { type: 'string', default: '' },
+  'out-quality': { type: 'string', default: '85' },
 };
-const { values, tokens } = util.parseArgs({ options, tokens: true });
+const { values } = util.parseArgs({ options });
 console.log('values:', JSON.stringify(values));
 
 /**
@@ -20,7 +21,7 @@ console.log('values:', JSON.stringify(values));
  */
 Task.createTask({
   input: async () => {
-    const list = await fs.readdirp(values['src-dir'], { fileFilter: '*.livp' });
+    const list = await fs.readdirp(values['src-dir'], { fileFilter: values['file-filter'] });
     return list.map(entry => ({ srcFile: entry.fullPath }));
   },
   // concurrency: 1,

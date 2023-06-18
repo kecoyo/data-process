@@ -5,14 +5,22 @@ const fs = require('../common/fs-extra');
 const { spawn } = require('../common/child_process');
 
 const options = {
-  'src-dir': { type: 'string', default: 'D:\\mov' },
-  'file-filter': { type: 'string', default: '*.mov' },
-  'out-dir': { type: 'string', default: 'D:\\mov\\mp4' },
+  'src-dir': { type: 'string', default: 'E:\\我的视频' },
+  'file-filter': { type: 'string', default: '禹林阳光幼儿园2018元旦.mp4' },
+  'out-dir': { type: 'string', default: 'E:\\我的视频' },
   'out-extname': { type: 'string', default: '.mp4' },
-  'out-suffix': { type: 'string', default: '' },
+  'out-suffix': { type: 'string', default: '-002' },
+  'out-option': { type: 'string', default: 'high' },
 };
 const { values } = util.parseArgs({ options });
 console.log('values:', JSON.stringify(values));
+
+const ffmpegParams = {
+  best: ['-c:v', 'h264', '-b:v', '10.36M', '-c:a', 'aac', '-strict', '-2', '-rtbufsize', '30m', '-max_muxing_queue_size', '1024'],
+  high: ['-c:v', 'h264', '-b:v', '7.88M', '-c:a', 'aac', '-strict', '-2', '-rtbufsize', '30m', '-max_muxing_queue_size', '1024'],
+  middle: ['-c:v', 'h264', '-b:v', '10.36M', '-c:a', 'aac', '-strict', '-2', '-rtbufsize', '30m', '-max_muxing_queue_size', '1024'],
+  low: ['-c:v', 'h264', '-b:v', '10.36M', '-c:a', 'aac', '-strict', '-2', '-rtbufsize', '30m', '-max_muxing_queue_size', '1024'],
+};
 
 /**
  * 批量mov图片转mp4
@@ -40,7 +48,7 @@ Task.createTask({
     const outFile = path.join(outDir, outFileName);
 
     // 高质量和大小
-    await spawn('ffmpeg', ['-y', '-i', srcFile, '-c:v', 'h264', '-b:v', '10.36M', '-c:a', 'aac', '-strict', '-2', '-rtbufsize', '30m', '-max_muxing_queue_size', '1024', outFile]);
+    await spawn('ffmpeg', ['-y', '-i', srcFile, ...ffmpegParams[values['out-option']], outFile]);
 
     row.outFile = outFile;
   },

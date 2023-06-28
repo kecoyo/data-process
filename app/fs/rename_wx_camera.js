@@ -6,12 +6,9 @@ const { spawn } = require('../common/child_process');
 const dayjs = require('dayjs');
 
 const options = {
-  'src-dir': { type: 'string', default: 'e:\\我的相册\\来自：vivo V3M A' },
-  'file-filter': { type: 'string', default: 'mmexport*.jpg' },
-  'out-dir': { type: 'string', default: 'e:\\我的相册\\来自：vivo V3M A' },
-  'out-extname': { type: 'string', default: '.jpg' },
-  'out-suffix': { type: 'string', default: '' },
-  'out-quality': { type: 'string', default: '90' },
+  'src-dir': { type: 'string', default: 'e:\\我的相册\\来自：vivo X9（妈）' },
+  'file-filter': { type: 'string', default: 'wx_camera_*.(jpg|mp4)' },
+  'out-dir': { type: 'string', default: '' },
 };
 const { values } = util.parseArgs({ options });
 console.log('values:', JSON.stringify(values));
@@ -37,10 +34,15 @@ Task.createTask({
     // 确保目录存在
     fs.ensureDirSync(outDir);
 
-    const outName = dayjs(Number(srcName.replace('mmexport', ''))).format('YYYY-MM-DD HHmmss');
-    const outFileName = outName + srcExtName;
+    const dateFmt = dayjs(Number(srcName.replace('wx_camera_', ''))).format('YYYYMMDD_HHmmss');
+
+    const outExtName = srcExtName.toLowerCase();
+    const outPrefix = outExtName === '.jpg' ? 'IMG_' : outExtName === '.mp4' ? 'video_' : '';
+    const outName = outPrefix + dateFmt;
+    const outFileName = outName + outExtName;
     const outFile = path.join(outDir, outFileName);
 
+    // 重命名
     fs.renameSync(srcFile, outFile);
 
     row.outFile = outFile;

@@ -41,7 +41,8 @@
       "eslint-config-ljlx"
     ],
     "rules": {
-      "import/no-extraneous-dependencies": 0
+      "import/no-extraneous-dependencies": 0,
+      "no-nested-ternary": 0
     }
   },
   "prettier": "prettier-config-ljlx"

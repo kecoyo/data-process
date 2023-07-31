@@ -1,18 +1,31 @@
 {
   "name": "data-process",
   "version": "1.0.0",
-  "description": "a simple project for data process.",
   "private": true,
-  "scripts": {},
-  "author": "kecoyo",
+  "description": "a simple project for data process.",
   "license": "MIT",
+  "author": "kecoyo",
+  "scripts": {},
+  "prettier": "prettier-config-ljlx",
+  "eslintConfig": {
+    "extends": [
+      "eslint-config-ljlx"
+    ],
+    "rules": {
+      "no-nested-ternary": 0,
+      "object-curly-newline": 0,
+      "import/no-extraneous-dependencies": 0
+    }
+  },
   "dependencies": {
     "ali-oss": "^6.17.1",
     "axios": "^1.1.3",
+    "cheerio": "^1.0.0-rc.12",
     "config": "^3.3.9",
     "converter-to-sync": "^1.1.9",
     "dayjs": "^1.11.8",
     "exceljs": "^4.3.0",
+    "execa": "^4.0.3",
     "extract-zip": "^2.0.1",
     "fast-csv": "^4.3.6",
     "fastq": "^1.13.0",
@@ -22,28 +35,49 @@
     "iconv-lite": "^0.6.3",
     "jeselvmo": "^2.0.7",
     "lodash": "^4.17.21",
+    "md5": "^2.3.0",
+    "md5-file": "^5.0.0",
     "mysql2": "^2.3.3",
     "node-schedule": "^2.1.1",
     "read-chunk": "^4.0.3",
     "readdirp": "^3.6.0",
     "redis": "^4.5.1",
     "sequelize": "^6.27.0",
+    "shelljs": "^0.8.5",
+    "through2": "^4.0.2",
     "universalify": "^2.0.0",
-    "util": "^0.12.5"
+    "util": "^0.12.5",
+    "zaifumo": "^1.0.0-beta.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/node": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "@babel/register": "^7.22.5",
+    "@types/ali-oss": "^6.16.7",
+    "@types/fs-extra": "^9.0.13",
+    "@types/lodash": "^4.14.191",
+    "@types/md5": "^2.3.2",
+    "@types/node": "^20.4.5",
+    "@types/shelljs": "^0.8.12",
+    "@types/ua-parser-js": "^0.7.36",
+    "@types/universalify": "^1.0.0",
+    "babel-node": "^0.0.1-security",
+    "babel-register": "^6.26.0",
+    "chalk": "^4.1.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.35.0",
     "eslint-config-ljlx": "^1.0.0",
-    "prettier-config-ljlx": "^1.0.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "eslint-config-ljlx"
-    ],
-    "rules": {
-      "import/no-extraneous-dependencies": 0,
-      "no-nested-ternary": 0
-    }
-  },
-  "prettier": "prettier-config-ljlx"
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.8",
+    "prettier-config-ljlx": "^1.0.0",
+    "rimraf": "^5.0.1",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.6.1",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "tslint-config-standard": "^8.0.1",
+    "tsup": "^7.1.0",
+    "typescript": "^5.1.6"
+  }
 }

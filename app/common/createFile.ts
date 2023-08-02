@@ -10,7 +10,7 @@ import fsExtra from './fs-extra';
  * @param {*} specialRules 额外的特殊替换规则，会优先执行
  * @returns 目标文本
  */
-function replaceContent(content, srcName, destName, specialRules) {
+function replaceContent(content: string, srcName: string, destName: string, specialRules: string[][]) {
   // 要替换的数据
   const rules = [
     ...specialRules, // 特殊替换、中文注释
@@ -38,7 +38,7 @@ function replaceContent(content, srcName, destName, specialRules) {
  * @param {*} destName 目标名称
  * @param {*} specialRules 额外的特殊替换规则，会优先执行
  */
-function createFile(srcDir, destDir, filePath, srcName, destName, specialRules) {
+function createFile(srcDir: string, destDir: string, filePath: string, srcName: string, destName: string, specialRules: string[][]) {
   // 源文件
   const srcFilePath = filePath;
   const srcFile = path.join(srcDir, srcFilePath);

@@ -7,5 +7,11 @@ console.log('NODE_ENV: ' + config.util.getEnv('NODE_ENV'));
 console.log('NODE_CONFIG_ENV: ' + config.util.getEnv('NODE_CONFIG_ENV'));
 console.log('HOSTNAME: ' + config.util.getEnv('HOSTNAME'));
 
-const dbConfig = config.get('Customer.dbConfig');
-console.log('Customer.dbConfig:', dbConfig);
+const hasProp = config.has('Customer.dbConfig');
+console.log('Customer.dbConfig:', hasProp);
+
+const accessKeySecret = config.get('ossclient.accessKeySecret');
+console.log('ossclient.accessKeySecret:', accessKeySecret);
+
+const testMysql = config.get('test-mysql');
+console.log('test-mysql:', testMysql);

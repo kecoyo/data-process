@@ -1,14 +1,14 @@
 import path from 'path';
-import Task from '../common/task';
 import createFile from '../common/createFile';
 import fsExtra from '../common/fs-extra';
+import Task from '../common/task';
 
 Task.createTask({
   input: async () => {
     return [
       {
-        srcDir: 'D:\\ljshell\\banpai\\banpai-mini-teacher\\src\\components\\list-item',
-        destDir: 'D:\\ljshell\\banpai\\banpai-mini-teacher\\src\\components\\search-input',
+        srcDir: 'D:\\ljshell\\banpai\\banpai-mini-teacher\\src\\components\\select',
+        destDir: 'D:\\ljshell\\banpai\\banpai-mini-teacher\\src\\components\\base-select',
         specialRules: [['滚动视图', '表单项']],
       },
       // {

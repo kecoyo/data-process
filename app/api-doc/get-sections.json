@@ -8,7 +8,15 @@
         "note": "返回数据里有schoolInfo:学校信息,applyInfo:申请入校信息，两个不会同时有",
         "path": "/api/school/getMySchoolInfo",
         "method": "getMySchoolInfo",
-        "params": []
+        "params": [],
+        "data": [
+          {
+            "name": "applyId",
+            "type": "number",
+            "require": "必填",
+            "note": "申请id"
+          }
+        ]
       },
       {
         "name": "退出学校获取手机验证码",
@@ -22,7 +30,24 @@
             "require": "必填",
             "note": "手机号"
           }
-        ]
+        ],
+        "data": {
+          "type": "object",
+          "value": [
+            {
+              "name": "applyId",
+              "type": "number",
+              "require": "必填",
+              "note": "申请id"
+            },
+            {
+              "name": "applyId",
+              "type": "number",
+              "require": "必填",
+              "note": "申请id"
+            }
+          ]
+        }
       },
       {
         "name": "退出学校",
@@ -412,7 +437,7 @@
       {
         "name": "创建教师",
         "note": "",
-        "path": "/api/user/addTeacher",
+        "path": "/api/school/addTeacher",
         "method": "addTeacher",
         "params": [
           {
@@ -522,6 +547,13 @@
             "note": "头像"
           }
         ]
+      },
+      {
+        "name": "解除和孩子关系",
+        "note": "",
+        "path": "/api/child/unbindRelation",
+        "method": "unbindRelation",
+        "params": []
       },
       {
         "name": "编辑孩子信息",
@@ -636,7 +668,7 @@
       {
         "name": "添加家长",
         "note": "",
-        "path": "/api/user/addParent",
+        "path": "/api/child/addParent",
         "method": "addParent",
         "params": [
           {
@@ -674,7 +706,7 @@
       {
         "name": "添加孩子",
         "note": "",
-        "path": "/api/user/addChild",
+        "path": "/api/child/addChild",
         "method": "addChild",
         "params": [
           {
@@ -958,6 +990,13 @@
             "note": "设备编号"
           }
         ]
+      },
+      {
+        "name": "查看班牌绑定信息",
+        "note": "班牌app轮询获取绑定信息，来校验是否绑定成功",
+        "path": "/api/service/getClassByCard",
+        "method": "getClassByCard",
+        "params": []
       }
     ]
   },
@@ -1224,6 +1263,26 @@
             "type": "number",
             "require": "必填",
             "note": "每页条数"
+          }
+        ]
+      },
+      {
+        "name": "查找班级里同名的学生",
+        "note": "",
+        "path": "/api/class/getStudentFromClass",
+        "method": "getStudentFromClass",
+        "params": [
+          {
+            "name": "classId",
+            "type": "number",
+            "require": "必填",
+            "note": "班级id"
+          },
+          {
+            "name": "name",
+            "type": "number",
+            "require": "必填",
+            "note": "学生名字"
           }
         ]
       },
@@ -1589,10 +1648,10 @@
         "method": "getGradeAdminList",
         "params": [
           {
-            "name": "gradeId",
-            "type": "number",
-            "require": "必填",
-            "note": "年级id"
+            "name": "Number",
+            "type": "string",
+            "require": "",
+            "note": "gradeId 年级id"
           }
         ]
       },
@@ -1624,7 +1683,7 @@
         ]
       },
       {
-        "name": "取消年级管理员",
+        "name": "取消管理员",
         "note": "有年级id，则取消年级管理员信息，没有年级id，就取消学校管理员信息",
         "path": "/api/admin/cancelAdmin",
         "method": "cancelAdmin",

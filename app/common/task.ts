@@ -1,31 +1,70 @@
 import fastq from 'fastq';
 import _ from 'lodash';
 
-class Task {
-  constructor(options = {}) {
-    this.options = _.defaultsDeep({}, options, {
-      concurrency: 10, // 并发数
-      showErrorLog: true, // 显示错误日志
-    });
+interface ProcessResult {
+  success: number;
+  fail: number;
+}
 
-    this.startTime = 0; // 开始时间
-    this.endTime = 0; // 结束时间
-    this.success = 0; // 成功个数
-    this.fail = 0; // 失败个数
+/**
+ * 定义配置
+ */
+interface TaskOptions<T = any> {
+  input: (task: Task<T>) => Promise<T[]>;
+  concurrency?: number; // 并发数
+  showErrorLog?: boolean; // 显示错误日志
+  onBeforeProcess?: (task: Task<T>) => Promise<void>;
+  processRow: (row: T, task: Task<T>) => Promise<void>;
+  onAfterProcess?: (task: Task<T>) => Promise<void>;
+  onCompleted?: (task: Task<T>) => Promise<void>;
+}
+
+/**
+ * 默认配置
+ */
+const defaultOptions = {
+  concurrency: 10, // 并发数
+  showErrorLog: true, // 显示错误日志
+};
+
+class Task<T = any> {
+  /**
+   * 选项配置
+   */
+  options: TaskOptions<T>;
+
+  /**
+   * 选项配置
+   */
+  list: T[] = [];
+
+  /**
+   * 任务执行计时、计数
+   */
+  // success = 0; // 成功个数
+  // fail = 0; // 失败个数
+
+  constructor(options: TaskOptions<T>) {
+    this.options = _.defaultsDeep({}, options, defaultOptions);
   }
+
+  static createTask = (options: TaskOptions) => {
+    options = _.defaultsDeep({}, options);
+    new Task(options).run();
+  };
 
   /**
    * 开始运行
    */
   async run() {
-    this.startTime = Date.now();
+    let startTime = Date.now(); // 开始时间
     await this.readData();
     await this.beforeProcess();
-    await this.process();
+    let { success, fail } = await this.process(); // 处理，返回成功和失败个数
     await this.afterProcess();
     await this.writeData();
-    this.endTime = Date.now();
-    console.log(`成功: ${this.success}, 失败: ${this.fail}, 用时：${(this.endTime - this.startTime) / 1000}s`);
+    let endTime = Date.now(); // 结束时间
+    console.log(`成功: ${success}, 失败: ${fail}, 用时：${(endTime - startTime) / 1000}s`);
     await this.completed();
   }
 
@@ -45,34 +84,37 @@ class Task {
    * 处理整个过程
    * @returns
    */
-  async process() {
-    return new Promise((resolve, reject) => {
+  async process(): Promise<ProcessResult> {
+    return new Promise((resolve) => {
+      let success = 0; // 成功个数
+      let fail = 0; // 失败个数
+
       if (this.list.length === 0) {
-        resolve('Empty');
+        resolve({ success, fail });
         return;
       }
-      let concurrency = this.list.length < this.options.concurrency ? this.list.length : this.options.concurrency;
+      let concurrency = this.list.length < this.options.concurrency! ? this.list.length : this.options.concurrency;
       // Creates a new queue.
-      this.queue = fastq.promise(this, this.processRow, concurrency);
+      let queue: fastq.queueAsPromised = fastq.promise(this, this.processRow, concurrency!);
       for (let i = 0; i < this.list.length; i++) {
         const row = this.list[i];
         // Add a task at the end of the queue.
-        this.queue
-          .push({ row, i })
+        queue
+          .push(row)
           .then(() => {
             console.log(i, row);
-            this.success++;
+            success++;
           })
-          .catch(err => {
+          .catch((err: any) => {
             console.log(i, row);
-            this.fail++;
+            fail++;
             if (this.options.showErrorLog) console.log(err);
           });
       }
       // Wait for the queue to be drained.
       // The returned Promise will be resolved when all tasks in the queue have been processed by a worker.
-      this.queue.drained().then(() => {
-        resolve('Done');
+      queue.drained().then(() => {
+        resolve({ success, fail });
       });
     });
   }
@@ -80,9 +122,9 @@ class Task {
   /**
    * 处理每一行，第行是一个任务
    */
-  async processRow({ row, i }) {
+  async processRow(row: T): Promise<void> {
     if (this.options.processRow) {
-      await this.options.processRow(row, i, this);
+      await this.options.processRow(row, this);
     }
   }
 
@@ -113,10 +155,5 @@ class Task {
     }
   }
 }
-
-Task.createTask = options => {
-  options = _.defaultsDeep({}, options);
-  new Task(options).run();
-};
 
 export default Task;

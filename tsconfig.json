@@ -17,11 +17,9 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "removeComments": false,
-    "typeRoots": ["./types", "./typings", "./src/typings", "./node_modules/@types"],
+    "typeRoots": ["./types", "./typings", "./node_modules/@types"],
     "paths": {
-      "@/*": ["src/*"],
-      "zaifumo": ["lib"],
-      "zaifumo/*": ["lib/*"]
+      "@/*": ["app/*"]
     },
     "skipLibCheck": true,
     "alwaysStrict": true,
@@ -34,9 +32,9 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noImplicitReturns": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "noImplicitThis": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*"]
+  "include": ["app/**/*"]
 }

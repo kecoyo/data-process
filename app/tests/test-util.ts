@@ -10,17 +10,19 @@ function fn() {
 }
 const callbackFunction = util.callbackify(fn);
 
-callbackFunction((err, ret) => {
+callbackFunction((err) => {
   // When the Promise was rejected with `null` it is wrapped with an Error and
   // the original value is stored in `reason`.
 });
 
 class Foo {
+  a: number;
+
   constructor() {
     this.a = 42;
   }
 
-  bar(callback) {
+  bar(callback: (err: unknown, a: number) => void) {
     callback(null, this.a);
   }
 }
@@ -28,6 +30,6 @@ const foo = new Foo();
 const naiveBar = util.promisify(foo.bar);
 // TypeError: Cannot read property 'a' of undefined
 // naiveBar().then(a => console.log(a));
-naiveBar.call(foo).then(a => console.log(a)); // '42'
+naiveBar.call(foo).then((a) => console.log(a)); // '42'
 const bindBar = naiveBar.bind(foo);
-bindBar().then(a => console.log(a)); // '42'
+bindBar().then((a) => console.log(a)); // '42'

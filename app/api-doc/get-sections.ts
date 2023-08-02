@@ -1,24 +1,50 @@
 /* eslint-disable quotes */
-import path from 'path';
 import cheerio from 'cheerio';
+import path from 'path';
 import fsExtra from '../common/fs-extra';
 
-const html = fsExtra.readFileSync(path.join(__dirname, 'index.html'), 'utf-8');
+interface Section {
+  name: string;
+  path: string;
+  apis: Api[];
+}
+
+interface Api {
+  name: string;
+  note: string;
+  path: string;
+  method: string;
+  params: Param[];
+  data: Data | Data[] | undefined;
+}
+
+interface Data {
+  [key: string]: any;
+}
+
+interface Param {
+  name: string;
+  type: string;
+  require: string;
+  note: string;
+}
+
+const html = fsExtra.readFileSync(path.join(__dirname, 'fetch-html.html'), 'utf-8');
 const $ = cheerio.load(html);
 
-const sections = [];
+const sections: Section[] = [];
 $('section.css-19xjxe.e13ihmr61').each((i, elSection) => {
   console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-  const section = {};
+  const section: Section = { name: '', path: '', apis: [] };
 
   const sectionName = $('h1', elSection).text().trim();
   console.log('sectionName:', sectionName);
   section.name = sectionName;
 
-  const apis = [];
+  const apis: Api[] = [];
   $('div.css-1xvlnhu.e13ihmr62', elSection).each((j, elApi) => {
     console.log('----------------------------------');
-    const api = {};
+    const api: Api = { name: '', note: '', path: '', method: '', params: [] };
 
     const apiName = $('span.css-wjdogd.e13ihmr611', elApi).text().trim();
     console.log('--apiName:', apiName);
@@ -46,13 +72,13 @@ $('section.css-19xjxe.e13ihmr61').each((i, elSection) => {
     api.method = apiMethod;
 
     console.log('--apiParams:');
-    const params = [];
+    const params: Param[] = [];
     $('ul.css-1wsccn1.e13ihmr68 > li', elApi).each((k, elParam) => {
       const paramName = $('.css-1nsvx3p', elParam).text().trim();
       const paramType = $('.css-93cao6', elParam).text().trim();
       const paramRequire = $('.css-1aol6gr', elParam).text().trim();
       const paramNote = $('.css-1lbu0n', elParam).text().trim();
-      const param = {
+      const param: Param = {
         name: paramName,
         type: paramType,
         require: paramRequire,
@@ -71,5 +97,5 @@ $('section.css-19xjxe.e13ihmr61').each((i, elSection) => {
   sections.push(section);
 });
 
-fsExtra.writeFileSync(path.join(__dirname, 'section.json'), JSON.stringify(sections, null, '  '), 'utf-8');
+fsExtra.writeFileSync(path.join(__dirname, 'get-sections.json'), JSON.stringify(sections, null, '  '), 'utf-8');
 console.log('OK');

@@ -5,7 +5,7 @@ const queue = fastq.promise(worker, 10);
 /**
  * 任务处理
  */
-async function worker(n) {
+async function worker(n: number) {
   return new Promise((resolve, reject) => {
     let sum = 0;
     for (let i = 1; i <= n; i++) {
@@ -29,7 +29,7 @@ async function run() {
   setInterval(async () => {
     for (let i = 0; i < 100; i++) {
       const num = Math.floor(Math.random() * 100 + 1);
-      queue.push(num).then(result => {
+      queue.push(num).then((result) => {
         console.log('the result is', num, result);
       });
     }

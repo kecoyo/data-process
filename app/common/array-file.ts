@@ -4,19 +4,19 @@ import universalify from 'universalify';
 const ENTER = '\n';
 const SPACE = ' ';
 
-function stringify(array, { EOL = ENTER, space = SPACE, finalEOL = false } = {}) {
+function stringify(array: any[], { EOL = ENTER, space = SPACE, finalEOL = false } = {}) {
   const EOF = finalEOL ? EOL : '';
-  array = array.map(item => item.join(space));
+  array = array.map((item) => item.join(space));
   return array.join(EOL) + EOF;
 }
 
-function stripBom(content) {
+function stripBom(content: string | Buffer): string {
   // we do this because JSON.parse would convert it to a utf8 string if encoding wasn't specified
   if (Buffer.isBuffer(content)) content = content.toString('utf8');
   return content.replace(/^\uFEFF/, '');
 }
 
-async function _readArray(file, options = {}) {
+async function _readArray(file: string, options = {}) {
   if (typeof options === 'string') {
     options = { encoding: options };
   }
@@ -24,7 +24,7 @@ async function _readArray(file, options = {}) {
   const shouldThrow = 'throws' in options ? options.throws : true;
   const space: string = ('space' in options ? options.space : SPACE) as string;
 
-  let content: string = await universalify.fromCallback(fs.readFile)(file, options);
+  let content = await universalify.fromCallback(fs.readFile)(file, options);
 
   content = stripBom(content);
 
@@ -51,7 +51,7 @@ async function _readArray(file, options = {}) {
 
 const readArray = universalify.fromPromise(_readArray);
 
-function readArraySync(file, options = {}) {
+function readArraySync(file: string, options = {}) {
   if (typeof options === 'string') {
     options = { encoding: options };
   }
@@ -60,11 +60,11 @@ function readArraySync(file, options = {}) {
   const space = ('space' in options ? options.space : SPACE) as string;
 
   try {
-    let content = fs.readFileSync(file, options);
+    let content: string | Buffer = fs.readFileSync(file, options);
 
     content = stripBom(content);
 
-    let lines = (content as unknown as string).split(ENTER);
+    let lines = content.split(ENTER);
     let arr: string[][] = [];
 
     for (let i = 0; i < lines.length; i++) {
@@ -84,14 +84,14 @@ function readArraySync(file, options = {}) {
   }
 }
 
-async function _writeArray(file, array, options = {}) {
+async function _writeArray(file: string, array: any, options = {}) {
   const str = stringify(array, options);
   await universalify.fromCallback(fs.writeFile)(file, str, options);
 }
 
 const writeArray = universalify.fromPromise(_writeArray);
 
-function writeArraySync(file, array, options = {}) {
+function writeArraySync(file: string, array: string[], options = {}) {
   const str = stringify(array, options);
   fs.writeFileSync(file, str, options);
 }

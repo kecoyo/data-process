@@ -29,7 +29,7 @@ const job = schedule.scheduleJob('*/5 * * * * *', function () {
     job.cancel();
   }
 });
-console.log('🚀', job);
+// console.log('🚀', job);
 
 // A scheduled event each time they're scheduled to run.
 job.addListener('scheduled', () => {

@@ -1,8 +1,14 @@
 import { spawn } from 'child_process';
+import fs from 'fs-extra';
 import path from 'path';
-import fs from './fs-extra';
 
-function m3u8ToMp4(src, dest) {
+/**
+ * m3u8转mp4
+ * @param src
+ * @param dest
+ * @returns
+ */
+export function m3u8ToMp4(src: string, dest: string): Promise<void> {
   return new Promise((resolve, reject) => {
     // 确保目录存在
     fs.ensureDirSync(path.dirname(dest));
@@ -20,7 +26,3 @@ function m3u8ToMp4(src, dest) {
     });
   });
 }
-
-export default {
-  m3u8ToMp4,
-};

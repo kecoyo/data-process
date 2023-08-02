@@ -2,7 +2,7 @@ import csv from 'fast-csv';
 import fs from 'fs';
 import universalify from 'universalify';
 
-async function _readCsv(file, options = { headers: true }) {
+async function _readCsv(file: string, options = { headers: true }) {
   let list = await new Promise((resolve, reject) => {
     let rows: any[] = [];
     csv
@@ -19,7 +19,7 @@ const readCsv = universalify.fromPromise(_readCsv);
 
 // const readCsvSync = convertToSyncFunction(_readCsv);
 
-async function _writeCsv(file, rows, options = { headers: true }) {
+async function _writeCsv(file: string, rows: any, options = { headers: true }) {
   return await new Promise((resolve, reject) => {
     csv
       .writeToStream(fs.createWriteStream(file), rows, options)

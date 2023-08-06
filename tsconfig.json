@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "rootDirs": ["src", "app"],
+    "rootDirs": ["src"],
     "outDir": "./dist",
     "target": "esnext",
     "module": "commonjs",
@@ -19,9 +19,9 @@
     "removeComments": false,
     "typeRoots": ["./types", "./typings", "./node_modules/@types"],
     "paths": {
-      "@/*": ["app/*"]
+      "@/*": ["src/*"]
     },
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "alwaysStrict": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
@@ -32,9 +32,9 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noImplicitReturns": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "noImplicitThis": true,
     "resolveJsonModule": true
   },
-  "include": ["app/**/*"]
+  "include": ["src/**/*"]
 }

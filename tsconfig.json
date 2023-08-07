@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "rootDirs": ["src"],
+    "rootDirs": ["src", "conifg"],
     "outDir": "./dist",
     "target": "esnext",
     "module": "commonjs",
@@ -36,5 +36,9 @@
     "noImplicitThis": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "config/**/*"],
+  "ts-node": {
+    // Do not forget to `npm i -D tsconfig-paths`
+    "require": ["tsconfig-paths/register"]
+  }
 }

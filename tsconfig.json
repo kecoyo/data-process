@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "rootDirs": ["src", "conifg"],
+    "rootDirs": ["app", "conifg"],
     "outDir": "./dist",
     "target": "esnext",
     "module": "commonjs",
@@ -19,7 +19,7 @@
     "removeComments": false,
     "typeRoots": ["./types", "./typings", "./node_modules/@types"],
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["app/*"]
     },
     "skipLibCheck": false,
     "alwaysStrict": true,
@@ -36,9 +36,8 @@
     "noImplicitThis": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*", "config/**/*"],
+  "include": ["app/**/*", "config/**/*"],
   "ts-node": {
-    // Do not forget to `npm i -D tsconfig-paths`
     "require": ["tsconfig-paths/register"]
   }
 }

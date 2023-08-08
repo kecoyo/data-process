@@ -1799,6 +1799,13 @@
         ]
       },
       {
+        "name": "获取教师在学校的管理员身份",
+        "note": "",
+        "path": "/api/admin/getSchoolRole",
+        "method": "getSchoolRole",
+        "params": []
+      },
+      {
         "name": "获取控制班牌绑定和解绑的权限",
         "note": "",
         "path": "/api/admin/getControlClassCard",

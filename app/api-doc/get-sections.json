@@ -499,6 +499,12 @@
         "method": "editParentInfo",
         "params": [
           {
+            "name": "userId",
+            "type": "number",
+            "require": "必填",
+            "note": "其他家长id"
+          },
+          {
             "name": "name",
             "type": "string",
             "require": "",
@@ -637,7 +643,7 @@
             "name": "create",
             "type": "number",
             "require": "必填",
-            "note": "0直接绑定，1是创建同名孩子"
+            "note": "0直接绑定，1是创建孩子"
           },
           {
             "name": "userId",
@@ -850,8 +856,8 @@
             "note": "班级id"
           },
           {
-            "name": "deviceId",
-            "type": "number",
+            "name": "uuid",
+            "type": "string",
             "require": "",
             "note": "设备id"
           }
@@ -876,16 +882,10 @@
             "note": "班级id"
           },
           {
-            "name": "deviceId",
-            "type": "number",
-            "require": "必填",
-            "note": "设备编号"
-          },
-          {
-            "name": "location",
+            "name": "uuid",
             "type": "string",
             "require": "必填",
-            "note": "设备所在位置"
+            "note": "设备uuid"
           }
         ]
       },
@@ -902,10 +902,10 @@
             "note": "班级id"
           },
           {
-            "name": "deviceId",
-            "type": "number",
+            "name": "uuid",
+            "type": "string",
             "require": "必填",
-            "note": "设备编号"
+            "note": "设备uuid"
           }
         ]
       },
@@ -916,10 +916,10 @@
         "method": "getCtrlTime",
         "params": [
           {
-            "name": "deviceId",
+            "name": "configId",
             "type": "number",
             "require": "必填",
-            "note": "设备编号"
+            "note": "配置id"
           }
         ]
       },
@@ -1102,6 +1102,18 @@
             "type": "number",
             "require": "",
             "note": "班级性质，1行政班 2非行政班 0全部"
+          },
+          {
+            "name": "pageIndex",
+            "type": "number",
+            "require": "必填",
+            "note": "第几页"
+          },
+          {
+            "name": "pageSize",
+            "type": "number",
+            "require": "必填",
+            "note": "每页几条"
           }
         ]
       },

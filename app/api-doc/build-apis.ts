@@ -67,7 +67,7 @@ function getApiParamArrayType(param, level) {
   return `{\n${param.children.map((child) => getApiParam(child, level + 1)).join('\n')}\n${getApiParamSpaces(level)}}[]`;
 }
 function getApiParam(param, level) {
-  return `${getApiParamSpaces(level)}${param.name}${getApiParamRequire(param.require)}: ${param.type === 'array' ? getApiParamArrayType(param, level) : param.type};${getApiParamNote(param.note)}`;
+  return `${getApiParamSpaces(level)}${param.name}${getApiParamRequire(param.require)}: ${param.type === 'array' && param.children ? getApiParamArrayType(param, level) : param.type};${getApiParamNote(param.note)}`;
 }
 function getApiFuncWithParams(api) {
   return `

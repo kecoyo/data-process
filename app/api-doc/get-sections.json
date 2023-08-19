@@ -200,7 +200,7 @@
           {
             "name": "idCode",
             "type": "string",
-            "require": "必填",
+            "require": "",
             "note": "学校识别码"
           },
           {
@@ -458,10 +458,24 @@
             "note": "学科"
           },
           {
-            "name": "charge",
+            "name": "classAdmin",
             "type": "number",
             "require": "必填",
             "note": "是否是班主任，0不是，1是"
+          }
+        ]
+      },
+      {
+        "name": "通过学校id获取学校信息",
+        "note": "",
+        "path": "/api/school/getSchoolById",
+        "method": "getSchoolById",
+        "params": [
+          {
+            "name": "schoolId",
+            "type": "number",
+            "require": "必填",
+            "note": "学校id"
           }
         ]
       }
@@ -665,6 +679,12 @@
         "path": "/api/message/getAllMessage",
         "method": "getAllMessage",
         "params": [
+          {
+            "name": "appId",
+            "type": "number",
+            "require": "必填",
+            "note": "小程序id，1是教师端，2是家长端"
+          },
           {
             "name": "pageIndex",
             "type": "number",
@@ -911,41 +931,97 @@
       },
       {
         "name": "获取开关机时间",
-        "note": "班牌app轮询获取绑定信息，来校验是否绑定成功",
+        "note": "",
         "path": "/api/service/getCtrlTime",
         "method": "getCtrlTime",
         "params": [
           {
-            "name": "configId",
+            "name": "schoolId",
             "type": "number",
             "require": "必填",
-            "note": "配置id"
+            "note": "学校id"
+          },
+          {
+            "name": "gradeId",
+            "type": "number",
+            "require": "必填",
+            "note": "年级id"
+          },
+          {
+            "name": "classIds",
+            "type": "number[]",
+            "require": "必填",
+            "note": "班级id"
           }
         ]
       },
       {
         "name": "设置开关机时间",
-        "note": "班牌app轮询获取绑定信息，来校验是否绑定成功",
+        "note": "schoolId和classId不能够同时为0",
         "path": "/api/service/setCtrlTime",
         "method": "setCtrlTime",
         "params": [
           {
-            "name": "deviceId",
+            "name": "configId",
             "type": "number",
-            "require": "必填",
-            "note": "设备编号"
+            "require": "",
+            "note": "配置id"
           },
           {
-            "name": "openTime",
+            "name": "schoolId",
             "type": "number",
-            "require": "必填",
-            "note": "开机时间"
+            "require": "",
+            "note": "学校id"
           },
           {
-            "name": "closeTime",
+            "name": "gradeId",
+            "type": "number",
+            "require": "",
+            "note": "年级id"
+          },
+          {
+            "name": "classId",
+            "type": "number",
+            "require": "",
+            "note": "班级id"
+          },
+          {
+            "name": "launchTime",
             "type": "number",
             "require": "必填",
-            "note": "关机时间"
+            "note": "开机时间 从0点0分0秒开始的秒数"
+          },
+          {
+            "name": "shutTime",
+            "type": "number",
+            "require": "必填",
+            "note": "关机时间 当天0点开始算的秒数"
+          }
+        ]
+      },
+      {
+        "name": "批量设置开关机时间",
+        "note": "",
+        "path": "/api/service/batchSetCtrlTime",
+        "method": "batchSetCtrlTime",
+        "params": [
+          {
+            "name": "schoolId",
+            "type": "number",
+            "require": "",
+            "note": "学校id"
+          },
+          {
+            "name": "launchTime",
+            "type": "number",
+            "require": "必填",
+            "note": "开机时间 从0点0分0秒开始的秒数"
+          },
+          {
+            "name": "shutTime",
+            "type": "number",
+            "require": "必填",
+            "note": "关机时间 当天0点开始算的秒数"
           }
         ]
       }
@@ -1392,7 +1468,7 @@
             "name": "role",
             "type": "number",
             "require": "必填",
-            "note": "角色,1更新教师资料，非1更新家长和学生资料"
+            "note": "角色,1更新教师资料，2家长，3孩子"
           },
           {
             "name": "name",
@@ -1525,6 +1601,12 @@
             "type": "number",
             "require": "",
             "note": "民族"
+          },
+          {
+            "name": "relation",
+            "type": "number",
+            "require": "",
+            "note": "关系，编辑孩子信息的时候用"
           }
         ]
       },
@@ -1859,7 +1941,7 @@
       },
       {
         "name": "获取学校id和名字",
-        "note": "根据省，市，区县，还有学段来获取学校的id和名字，如果不填市和区县，只获取省级的学校，不会获取市级",
+        "note": "根据省，市，区县，还有学段来获取学校的id和名字，如果不填市和区县，只获取省级的学校，不会获取市级,phaseType可以为0，不限制学段查找",
         "path": "/api/common/getSchoolInfo",
         "method": "getSchoolInfo",
         "params": [
@@ -1886,6 +1968,12 @@
             "type": "number",
             "require": "必填",
             "note": "学段id"
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "require": "",
+            "note": "学校名字"
           },
           {
             "name": "pageIndex",

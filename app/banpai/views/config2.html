@@ -1,0 +1,159 @@
+// 为 slice state 定义一个类型
+interface ConfigState {
+  school: {
+    bg: string;
+  };
+  profile: {
+    address: string;
+    birth: string;
+    blood: string;
+    class: string;
+    country: string;
+    education: string;
+    email: string;
+    grade: string;
+    idcard: string;
+    master: string;
+    name: string;
+    nation: string;
+    native: string;
+    phone: string;
+    politics: string;
+    sex: string;
+    teach: string;
+    teacher_license: string;
+    time: string;
+    type: string;
+  };
+  others: {
+    avatar: string;
+    clear: string;
+    empty: string;
+    gray_button: string;
+    long_press: string;
+    official_qrcode: string;
+    ok_button: string;
+    phone: string;
+    scan: string;
+    search: string;
+    selected_off: string;
+    selected_on: string;
+    switch_off: string;
+    switch_on: string;
+    unread: string;
+    white_button: string;
+  };
+  mine: {
+    bg: string;
+    company: string;
+    idcard: string;
+    leave: string;
+    message: string;
+    my_class: string;
+    my_school: string;
+    visible: string;
+    official_account: string;
+    service: string;
+  };
+  login: {
+    background: string;
+    background_red: string;
+    logo: string;
+    logo_red: string;
+    phone: string;
+    wechat: string;
+  };
+  home: {
+    auth: string;
+    banpai: string;
+    class_manage: string;
+    daka: string;
+    fengcai: string;
+    homework: string;
+    leave: string;
+    notice: string;
+    red_flag: string;
+    red_flower: string;
+    timetable: string;
+  };
+}
+
+// 使用该类型定义初始 state
+const initialState: ConfigState = {
+  school: {
+    bg: 'assets/school/bg.png',
+  },
+  profile: {
+    address: 'assets/profile/address.png',
+    birth: 'assets/profile/birth.png',
+    blood: 'assets/profile/blood.png',
+    class: 'assets/profile/class.png',
+    country: 'assets/profile/country.png',
+    education: 'assets/profile/education.png',
+    email: 'assets/profile/email.png',
+    grade: 'assets/profile/grade.png',
+    idcard: 'assets/profile/idcard.png',
+    master: 'assets/profile/master.png',
+    name: 'assets/profile/name.png',
+    nation: 'assets/profile/nation.png',
+    native: 'assets/profile/native.png',
+    phone: 'assets/profile/phone.png',
+    politics: 'assets/profile/politics.png',
+    sex: 'assets/profile/sex.png',
+    teach: 'assets/profile/teach.png',
+    teacher_license: 'assets/profile/teacher_license.png',
+    time: 'assets/profile/time.png',
+    type: 'assets/profile/type.png',
+  },
+  others: {
+    avatar: 'assets/others/avatar.png',
+    clear: 'assets/others/clear.png',
+    empty: 'assets/others/empty.png',
+    gray_button: 'assets/others/gray_button.png',
+    long_press: 'assets/others/long_press.png',
+    official_qrcode: 'assets/others/official_qrcode.png',
+    ok_button: 'assets/others/ok_button.png',
+    phone: 'assets/others/phone.png',
+    scan: 'assets/others/scan.png',
+    search: 'assets/others/search.png',
+    selected_off: 'assets/others/selected_off.png',
+    selected_on: 'assets/others/selected_on.png',
+    switch_off: 'assets/others/switch_off.png',
+    switch_on: 'assets/others/switch_on.png',
+    unread: 'assets/others/unread.png',
+    white_button: 'assets/others/white_button.png',
+  },
+  mine: {
+    bg: 'assets/mine/bg.png',
+    company: 'assets/mine/company.png',
+    idcard: 'assets/mine/idcard.png',
+    leave: 'assets/mine/leave.png',
+    message: 'assets/mine/message.png',
+    my_class: 'assets/mine/my_class.png',
+    my_school: 'assets/mine/my_school.png',
+    visible: 'assets/mine/nosee.png',
+    official_account: 'assets/mine/official_account.png',
+    service: 'assets/mine/service.png',
+  },
+  login: {
+    background: 'assets/login/background.png',
+    background_red: 'assets/login/background_red.png',
+    logo: 'assets/login/logo.png',
+    logo_red: 'assets/login/logo_red.png',
+    phone: 'assets/login/phone.png',
+    wechat: 'assets/login/wechat.png',
+  },
+  home: {
+    auth: 'assets/home/auth.png',
+    banpai: 'assets/home/banpai.png',
+    class_manage: 'assets/home/class_manage.png',
+    daka: 'assets/home/daka.png',
+    fengcai: 'assets/home/fengcai.png',
+    homework: 'assets/home/homework.png',
+    leave: 'assets/home/leave.png',
+    notice: 'assets/home/notice.png',
+    red_flag: 'assets/home/red_flag.png',
+    red_flower: 'assets/home/red_flower.png',
+    timetable: 'assets/home/timetable.png',
+  },
+};

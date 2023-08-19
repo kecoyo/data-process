@@ -1,21 +1,26 @@
+import { readdirp } from '@/common/fs-extra';
+import { createTask } from '@/common/task';
+import { createFile } from '@/common/template-file';
 import path from 'path';
-import { Task } from 'zaifumo';
-import createFile from '../common/template-file';
-import fsExtra from '../common/fs-extra';
 
-Task.createTask({
+createTask({
   input: async () => {
     return [
+      // {
+      //   srcDir: 'D:\\ljshell\\banpai\\banpai-mini-teacher\\src\\pages\\banpai-manage',
+      //   destDir: 'D:\\ljshell\\banpai\\banpai-mini-teacher\\src\\pages\\web-view',
+      //   specialRules: [['班牌管理', '内嵌网页']],
+      // },
       {
-        srcDir: 'D:\\ljshell\\banpai\\banpai-mini-teacher\\src\\pages\\address-book',
-        destDir: 'D:\\ljshell\\banpai\\banpai-mini-teacher\\src\\pages\\authority-manage1111',
-        specialRules: [['通讯录', '权限管理']],
+        srcDir: 'D:\\ljshell\\banpai\\hardwareMini\\src\\pages\\class-detail',
+        destDir: 'D:\\ljshell\\banpai\\hardwareMini\\src\\pages\\school-detail',
+        specialRules: [['班级详情', '学校详情']],
       },
     ];
   },
   concurrency: 1,
   processRow: async (row, i) => {
-    const fileList = await fsExtra.readdirp(row.srcDir, { fileFilter: '*.*' });
+    const fileList = await readdirp(row.srcDir, { fileFilter: '*.*' });
 
     for (let i = 0; i < fileList.length; i++) {
       const fileEntry = fileList[i];

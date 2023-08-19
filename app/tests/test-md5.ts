@@ -3,7 +3,8 @@ import fs from 'fs-extra';
 import md5 from 'md5';
 import SparkMD5 from 'spark-md5';
 
-const file = 'E:\\头像\\3dad695f40864ed385331a4d87816a51.jpeg';
+const file = 'C:\\Users\\Administrator\\Downloads\\首页.png';
+// const file = 'E:\\头像\\3dad695f40864ed385331a4d87816a51.jpeg';
 // const file = 'C:\\Users\\Administrator\\Downloads\\新建 文本文档.txt';
 
 fs.readFile(file, function (err, buf) {

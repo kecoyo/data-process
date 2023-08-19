@@ -1,9 +1,9 @@
+import { readdirp } from '@/common/fs-extra';
+import { createTask } from '@/common/task';
+import { createFile } from '@/common/template-file';
 import path from 'path';
-import createFile from '../common/template-file';
-import fsExtra from '../common/fs-extra';
-import Task from '../common/task';
 
-Task.createTask({
+createTask({
   input: async () => {
     return [
       // {
@@ -12,20 +12,20 @@ Task.createTask({
       //   specialRules: [['滚动视图', '表单项']],
       // },
       // {
-      //   srcDir: 'D:\\ljshell\\banpai\\banpai-mini-teacher\\src\\components\\avatar',
-      //   destDir: 'D:\\ljshell\\banpai\\banpai-mini-teacher\\src\\components\\icon',
-      //   specialRules: [['头像', '图标']],
+      //   srcDir: 'D:\\ljshell\\banpai\\banpai-mini-teacher\\src\\components\\list-item',
+      //   destDir: 'D:\\ljshell\\banpai\\banpai-mini-teacher\\src\\components\\new-msg-list',
+      //   specialRules: [['输入框', '输入框']],
       // },
       {
-        srcDir: 'D:\\ljshell\\banpai\\banpai-mini-teacher\\src\\pages\\my-school\\components\\quit-school-modal',
-        destDir: 'D:\\ljshell\\banpai\\banpai-mini-teacher\\src\\pages\\my-school\\components\\send-code-modal',
-        specialRules: [['滚动视图', '表单项']],
+        srcDir: 'D:\\ljshell\\banpai\\hardwareMini\\src\\components\\list-item',
+        destDir: 'D:\\ljshell\\banpai\\hardwareMini\\src\\components\\picture-upload',
+        specialRules: [['输入框', '输入框']],
       },
     ];
   },
   concurrency: 1,
   processRow: async (row, i) => {
-    const fileList = await fsExtra.readdirp(row.srcDir, { fileFilter: '*.*' });
+    const fileList = await readdirp(row.srcDir, { fileFilter: '*.*' });
 
     for (let i = 0; i < fileList.length; i++) {
       const fileEntry = fileList[i];

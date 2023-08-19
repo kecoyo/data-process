@@ -6,9 +6,9 @@ const { spawn } = require('../common/child_process');
 const extract = require('extract-zip');
 
 const options = {
-  'src-dir': { type: 'string', default: 'D:\\livp' },
+  'src-dir': { type: 'string', default: 'E:\\我的相册\\来自：iPhone12 Pro Max' },
   'file-filter': { type: 'string', default: '*.livp' },
-  'out-dir': { type: 'string', default: 'D:\\livp\\jpg' },
+  'out-dir': { type: 'string', default: 'E:\\我的相册\\jpg' },
   'out-extname': { type: 'string', default: '.jpg' },
   'out-suffix': { type: 'string', default: '' },
   'out-quality': { type: 'string', default: '85' },

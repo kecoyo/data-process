@@ -2,15 +2,12 @@ const path = require('path');
 const util = require('util');
 const Task = require('../common/task');
 const fs = require('../common/fs-extra');
-const { spawn } = require('../common/child_process');
+const dayjs = require('dayjs');
 
 const options = {
-  'src-dir': { type: 'string', default: 'E:\\我的相册\\来自：iPhone12 Pro Max' },
-  'file-filter': { type: 'string', default: '*.heic' },
-  'out-dir': { type: 'string', default: 'E:\\我的相册\\jpg' },
-  'out-extname': { type: 'string', default: '.jpg' },
-  'out-suffix': { type: 'string', default: '' },
-  'out-quality': { type: 'string', default: '85' },
+  'src-dir': { type: 'string', default: 'E:\\我的相册\\来自：iPhone6\\Video_' },
+  'file-filter': { type: 'string', default: 'Video_*.*' },
+  'out-dir': { type: 'string', default: '' },
 };
 const { values } = util.parseArgs({ options });
 console.log('values:', JSON.stringify(values));
@@ -23,25 +20,30 @@ Task.createTask({
     const list = await fs.readdirp(values['src-dir'], { fileFilter: values['file-filter'] });
     return list.map(entry => ({ srcFile: entry.fullPath }));
   },
-  // concurrency: 1,
+  concurrency: 1,
   processRow: async (row, i) => {
     const srcFile = row.srcFile;
     const srcFileName = path.basename(srcFile);
     const srcDir = path.dirname(srcFile);
-
-    // 文件名
-    const fileName = srcFileName.replace(path.extname(srcFile), '');
+    const srcExtName = path.extname(srcFile);
+    const srcName = srcFileName.replace(path.extname(srcFile), '');
 
     // 没有指定输出目录，输出到源目录
     const outDir = values['out-dir'] || srcDir;
-
     // 确保目录存在
     fs.ensureDirSync(outDir);
 
-    const outFileName = fileName + values['out-suffix'] + values['out-extname'];
+    // Video_20150124_214821_F5C.jpg
+
+    let outName = srcName.replace('Video_', '');
+    outName = `${outName.substring(0, 4)}-${outName.substring(4, 6)}-${outName.substring(6, 8)} ${outName.substring(9, 15)}`;
+
+    const outExtName = srcExtName.toLowerCase();
+    const outFileName = outName + outExtName;
     const outFile = path.join(outDir, outFileName);
 
-    await spawn('magick', [srcFile, '-quality', values['out-quality'], outFile]);
+    // 重命名
+    fs.renameSync(srcFile, outFile);
 
     row.outFile = outFile;
   },

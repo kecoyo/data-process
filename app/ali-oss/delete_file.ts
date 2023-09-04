@@ -14,7 +14,7 @@ CsvTask.createTask({
     headers: true,
   },
   processRow: async row => {
-    const ret = await ossClient.deleteFile(row.oss_file);
+    const ret = await ossClient.deleteOssFile(row.oss_file);
     row.result = ret;
   },
 });

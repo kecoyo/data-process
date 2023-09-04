@@ -5,7 +5,7 @@ const timeout = 60000;
 export default class OssClient extends OSS {
   // 列出文件列表
   async listOssFile(query: OSS.ListObjectsQuery) {
-    let list = [];
+    let list: string[] = [];
     let result = await this.list(query, { timeout });
     for (let i = 0; i < result.objects.length; i++) {
       const object = result.objects[i];
@@ -16,7 +16,7 @@ export default class OssClient extends OSS {
 
   // 列出指定前缀的文件列表
   async listOssFileByPrefix(prefix: string) {
-    let list = [];
+    let list: string[] = [];
     let result = await this.list({ prefix: prefix, 'max-keys': 1000 }, { timeout });
     for (let i = 0; i < result.objects.length; i++) {
       const object = result.objects[i];
@@ -49,10 +49,10 @@ export default class OssClient extends OSS {
   }
 
   // 删除单个文件
-  async deleteFile(name: string) {
+  async deleteOssFile(name: string) {
     try {
-      // let ret = await this.delete(name);
-      // return ret.res.statusCode;
+      let ret = await this.delete(name);
+      return ret.res.status;
     } catch (err: any) {
       return err.code || err.status;
     }
@@ -67,6 +67,15 @@ export default class OssClient extends OSS {
       // return ret.res.statusCode;
     } catch (err: any) {
       return err.code || err.status;
+    }
+  }
+
+  async isExistObject(name: string, options = {}) {
+    try {
+      const head = await this.head(name, options);
+      return true;
+    } catch (error) {
+      return false;
     }
   }
 }

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import fs from 'fs-extra';
+import path from 'path';
 
 /**
  * 检查网络资源是否存在
@@ -7,12 +8,13 @@ import fs from 'fs-extra';
  * @param {string} url
  * @returns
  */
-export const checkExists = async (url: string): Promise<number> => {
+export const checkExists = async (url: string): Promise<number | string> => {
   try {
     let res = await axios.head(url);
     return res.status; // 200
   } catch (err: any) {
-    return err.response.status; // 404
+    let { status, statusText } = err.response;
+    return `${status} ${statusText}`; // 404
   }
 };
 
@@ -26,5 +28,6 @@ export const downloadFile = async (url: string, saveFile: string): Promise<void>
   const res = await axios.get(url, {
     responseType: 'arraybuffer',
   });
+  fs.ensureDirSync(path.dirname(saveFile));
   fs.writeFileSync(saveFile, res.data);
 };

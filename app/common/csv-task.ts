@@ -5,7 +5,7 @@ import Task, { TaskOptions } from './task';
 /**
  * 定义配置
  */
-export interface CsvTaskOptions<T = any> extends TaskOptions<T> {
+export interface CsvTaskOptions extends TaskOptions {
   input: string;
   output?: string;
   options?: {
@@ -35,7 +35,7 @@ export class CsvTask extends Task {
   }
 }
 
-export function createCsvTask<T = any>(options: CsvTaskOptions<T>) {
+export function createCsvTask(options: CsvTaskOptions) {
   options = _.defaultsDeep({}, options, {
     options: {
       headers: true,

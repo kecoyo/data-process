@@ -10,13 +10,12 @@ interface ProcessResult {
  * 定义配置
  */
 export interface TaskOptions<T = any> {
-  input: string | ((task: Task<T>) => Promise<T[]>);
+  input: string | ((task: Task) => Promise<any[]>);
   concurrency?: number; // 并发数
-  showErrorLog?: boolean; // 显示错误日志
-  onBeforeProcess?: (task: Task<T>) => Promise<void>;
-  processRow: (row: T, task: Task<T>) => Promise<void>;
-  onAfterProcess?: (task: Task<T>) => Promise<void>;
-  onCompleted?: (task: Task<T>) => Promise<void>;
+  onBeforeProcess?: (task: Task) => Promise<void>;
+  processRow: (row: T, task: Task) => Promise<void>;
+  onAfterProcess?: (task: Task) => Promise<void>;
+  onCompleted?: (task: Task) => Promise<void>;
 }
 
 /**
@@ -24,21 +23,20 @@ export interface TaskOptions<T = any> {
  */
 const defaultOptions = {
   concurrency: 10, // 并发数
-  showErrorLog: true, // 显示错误日志
 };
 
-export default class Task<T = any> {
+export default class Task {
   /**
    * 选项配置
    */
-  options: TaskOptions<T>;
+  options: TaskOptions;
 
   /**
    * 选项配置
    */
-  list: T[] = [];
+  list: any[] = [];
 
-  constructor(options: TaskOptions<T>) {
+  constructor(options: TaskOptions) {
     this.options = _.defaultsDeep({}, options, defaultOptions);
   }
 
@@ -92,27 +90,35 @@ export default class Task<T = any> {
         queue
           .push(row)
           .then(() => {
+            row.code = '200';
+            row.message = '';
             console.log(i, row);
             success++;
           })
           .catch((err: any) => {
+            row.code = err.code || '500';
+            row.message = err.message;
             console.log(i, row);
             fail++;
-            if (this.options.showErrorLog) console.log(err);
+          })
+          .finally(() => {
+            if (success + fail === this.list.length) {
+              resolve({ success, fail });
+            }
           });
       }
-      // Wait for the queue to be drained.
-      // The returned Promise will be resolved when all tasks in the queue have been processed by a worker.
-      queue.drained().then(() => {
-        resolve({ success, fail });
-      });
+      // // Wait for the queue to be drained.
+      // // The returned Promise will be resolved when all tasks in the queue have been processed by a worker.
+      // queue.drained().then(() => {
+      //   resolve({ success, fail });
+      // });
     });
   }
 
   /**
    * 处理每一行，第行是一个任务
    */
-  async processRow(row: T): Promise<void> {
+  async processRow(row: any): Promise<void> {
     if (this.options.processRow) {
       await this.options.processRow(row, this);
     }
@@ -146,6 +152,6 @@ export default class Task<T = any> {
   }
 }
 
-export function createTask<T = any>(options: TaskOptions<T>) {
-  new Task<T>(options).run();
+export function createTask(options: TaskOptions) {
+  new Task(options).run();
 }

@@ -10,7 +10,7 @@ import path from 'path';
  */
 export const checkExists = async (url: string): Promise<number | string> => {
   try {
-    let res = await axios.head(url);
+    let res = await axios.get(url);
     return res.status; // 200
   } catch (err: any) {
     let { status, statusText } = err.response;

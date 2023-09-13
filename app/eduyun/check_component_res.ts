@@ -9,7 +9,7 @@ createCsvTask({
   input: path.join(__dirname, './check_component_res.csv'),
   concurrency: 1,
   processRow: async (row, i) => {
-    const status = await checkExists(row.Url);
+    const status = await checkExists(row.Url + '?v=1');
     row.status = status;
   },
 });

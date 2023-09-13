@@ -90,14 +90,14 @@ export default class Task {
         queue
           .push(row)
           .then(() => {
-            row.code = '200';
-            row.message = '';
+            // row.code = '0';
+            // row.message = 'success';
             console.log(i, row);
             success++;
           })
           .catch((err: any) => {
-            row.code = err.code || '500';
-            row.message = err.message;
+            // row.code = err.code || '500';
+            // row.message = err.message;
             console.log(i, row);
             fail++;
           })

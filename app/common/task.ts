@@ -99,6 +99,7 @@ export default class Task {
             // row.code = err.code || '500';
             // row.message = err.message;
             console.log(i, row);
+            console.log(err);
             fail++;
           })
           .finally(() => {

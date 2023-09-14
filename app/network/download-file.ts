@@ -4,9 +4,7 @@ import fs from 'fs-extra';
 import path from 'path';
 
 // 输出目录
-const outDir = 'd:\\output\\test\\';
-// 确保目录存在
-fs.ensureDirSync(outDir);
+const outDir = 'd:\\output\\www.ljlx.com\\';
 
 /**
  * 下载网络资源
@@ -15,12 +13,22 @@ createCsvTask({
   input: path.join(__dirname, './download-file.csv'),
   concurrency: 1,
   processRow: async (row, i) => {
-    const url = row.url;
     // 源文件名
-    const fileName = url.substring(url.lastIndexOf('/') + 1);
+    let fileName = row.url.substring(row.url.lastIndexOf('/') + 1);
+    fileName = fileName.replace(/\?.*/, '');
+
     // 输出文件
     const outFile = path.join(outDir, fileName);
-    // 下载文件
-    await downloadFile(url, outFile);
+
+    row.status = 'ok';
+
+    // 不存在，下载文件
+    if (!fs.existsSync(outFile)) {
+      try {
+        await downloadFile(row.url, outFile);
+      } catch (error: any) {
+        row.status = error.message;
+      }
+    }
   },
 });

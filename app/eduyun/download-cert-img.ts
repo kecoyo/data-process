@@ -1,29 +1,23 @@
+import { getUserSysCertList } from '@/apis/eduyunApi';
+import { downloadFile } from '@/common/request';
+import { createTask } from '@/common/task';
+import fs from 'fs-extra';
 import path from 'path';
-import util from 'util';
-import Task from '../common/task';
-import fs from '../common/fs-extra';
-import { spawn } from '../common/child_process';
-import dayjs from 'dayjs';
-import eduyunApi from '../apis/eduyunApi';
 
-const options = {
-  'cert-id': { type: 'string', default: '318' },
-  'out-dir': { type: 'string', default: 'e:/certImg' },
-};
-const { values } = util.parseArgs({ options });
-console.log('values:', JSON.stringify(values));
+const certId = 258; // 证书ID
+const outDir = 'D:\\output\\certImgs'; // 输出目录
 
 /**
  * 下载云平台证书图片
  */
-Task.createTask({
+createTask({
   input: async () => {
-    const list = await eduyunApi.getUserSysCertList({
-      certId: Number(values['cert-id']),
+    const list = await getUserSysCertList({
+      certId: certId,
       page_index: 1,
       page_size: 10000,
     });
-    return list.map(item => ({ certImg: item.certImg }));
+    return list;
   },
   // concurrency: 1,
   processRow: async (row, i) => {
@@ -31,15 +25,13 @@ Task.createTask({
 
     // 文件名
     const fileName = certImg.substring(certImg.lastIndexOf('/') + 1);
-    // 输出目录
-    const outDir = path.join(values['out-dir'], values['cert-id']);
+
     // 确保目录存在
     fs.ensureDirSync(outDir);
-    // 输出文件
+
+    // 文件输出路径
     const outFile = path.join(outDir, fileName);
     // 下载文件
-    await fs.downloadFile(certImg, outFile);
-
-    row.success = true;
+    await downloadFile(certImg, outFile);
   },
 });

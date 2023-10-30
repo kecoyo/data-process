@@ -1,13 +1,12 @@
 /* eslint-disable dot-notation */
+import { createCsvTask } from '@/common/csv-task';
 import path from 'path';
-import axios from 'axios';
-import CsvTask from '../common/csv-task';
 import shixunApi from '../apis/shixunApi';
 
 /**
  * 不参与互评名单，填充用户的绑定信息
  */
-CsvTask.createTask({
+createCsvTask({
   input: path.join(__dirname, './not_takepart_list.csv'),
   // concurrency: 1,
   processRow: async (row, i) => {

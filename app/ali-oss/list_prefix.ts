@@ -1,8 +1,8 @@
+import { createCsvTask } from '@/common/csv-task';
 import path from 'path';
-import CsvTask from '../common/csv-task';
-import OssClient from '../common/oss-client';
-import fsExtra from '../common/fs-extra';
 import config from '../common/config';
+import fsExtra from '../common/fs-extra';
+import OssClient from '../common/oss-client';
 
 const ossClient = new OssClient({ ...config.ossclient, bucket: 'file-im' });
 
@@ -11,12 +11,12 @@ let array = [];
 /**
  *  列出指定前缀的文件列表
  */
-CsvTask.createTask({
+createCsvTask({
   input: path.join(__dirname, './list_prefix-data.csv'),
   options: {
     headers: true,
   },
-  processRow: async row => {
+  processRow: async (row) => {
     let { prefix } = row;
 
     let list = await ossClient.listOssFile({ prefix: prefix, 'max-keys': 1000 });

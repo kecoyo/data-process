@@ -1,12 +1,12 @@
-import path from 'path';
+import { createCsvTask } from '@/common/csv-task';
 import _ from 'lodash';
-import CsvTask from '../common/csv-task';
+import path from 'path';
 import shixunApi from '../common/shixun_api';
 
 /**
  * 师训处理老师更换能力点
  */
-CsvTask.createTask({
+createCsvTask({
   input: path.join(__dirname, './update_points-input.csv'),
   output: path.join(__dirname, './update_points-output.csv'),
   options: {
@@ -27,7 +27,7 @@ CsvTask.createTask({
     if (row.school_id && row.user_id) {
       const userStatic = await shixunApi.getUserStatic(row.school_id, row.user_id);
       if (userStatic) {
-        const points = userStatic.onlinedetail.map(o => o.course_name.split(' ')[0]);
+        const points = userStatic.onlinedetail.map((o) => o.course_name.split(' ')[0]);
         Object.assign(row, {
           old_points: points.join(';'),
         });
@@ -54,7 +54,7 @@ CsvTask.createTask({
     {
       const userStatic = await shixunApi.getUserStatic(row.school_id, row.user_id);
       if (userStatic) {
-        const points = userStatic.onlinedetail.map(o => o.course_name.split(' ')[0]);
+        const points = userStatic.onlinedetail.map((o) => o.course_name.split(' ')[0]);
         Object.assign(row, {
           new_points: points.join(';'),
         });

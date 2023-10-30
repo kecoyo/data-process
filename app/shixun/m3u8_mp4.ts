@@ -1,11 +1,11 @@
+import { createCsvTask } from '@/common/csv-task';
 import path from 'path';
 import shixunApi from '../apis/shixunApi';
-import OssClient from '../common/oss-client';
-import fsExtra from '../common/fs-extra';
-import CsvTask from '../common/csv-task';
-import { m3u8ToMp4 } from '../common/ffmpeg';
-import httpClient from '../common/request';
 import config from '../common/config';
+import { m3u8ToMp4 } from '../common/ffmpeg';
+import fsExtra from '../common/fs-extra';
+import OssClient from '../common/oss-client';
+import httpClient from '../common/request';
 
 const argv = process.argv.slice(2);
 
@@ -21,7 +21,7 @@ const internal = config.get('ossclient.internal');
 /**
  * 不存在的mp4，用m3u8反向生成mp4，并上传当前位置
  */
-CsvTask.createTask({
+createCsvTask({
   input: path.join(__dirname, INPUT_FILE),
   options: {
     headers: true,

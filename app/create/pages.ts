@@ -11,10 +11,15 @@ createTask({
       //   destDir: 'D:\\ljshell\\banpai\\banpai-mini-teacher\\src\\pages\\web-view',
       //   specialRules: [['班牌管理', '内嵌网页']],
       // },
+      // {
+      //   srcDir: 'D:\\ljshell\\banpai\\hardwareMini\\src\\pages\\demo',
+      //   destDir: 'D:\\ljshell\\banpai\\hardwareMini\\src\\pages\\demo\\avatar',
+      //   specialRules: [['班级详情', '学校详情']],
+      // },
       {
-        srcDir: 'D:\\ljshell\\banpai\\hardwareMini\\src\\pages\\class-detail',
-        destDir: 'D:\\ljshell\\banpai\\hardwareMini\\src\\pages\\school-detail',
-        specialRules: [['班级详情', '学校详情']],
+        srcDir: 'D:\\ljshell\\banpai\\hardwareWeb\\src\\pages\\hardware\\vendor',
+        destDir: 'D:\\ljshell\\banpai\\hardwareWeb\\src\\pages\\program\\publish',
+        specialRules: [['厂商', '节目发布']],
       },
     ];
   },

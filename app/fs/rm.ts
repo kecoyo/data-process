@@ -1,24 +1,18 @@
+import { readdirp } from '@/common/fs-extra';
+import { createTask } from '@/common/task';
+import fs from 'fs-extra';
 import path from 'path';
-import util from 'util';
-import Task from '../common/task';
-import fs from '../common/fs-extra';
-import { spawn } from '../common/child_process';
-import dayjs from 'dayjs';
 
-const options = {
-  'src-dir': { type: 'string', default: 'e:\\我的相册\\来自：vivo X9（妈）' },
-  'file-filter': { type: 'string', default: '*\\(1\\).(jpg|mp4)' },
-};
-const { values } = util.parseArgs({ options });
-console.log('values:', JSON.stringify(values));
+const srcDir = 'e:\\我的相册\\来自：vivo X9（妈）';
+const fileFilter = '*\\(1\\).(jpg|mp4)';
 
 /**
  * 删除文件和目录
  */
-Task.createTask({
+createTask({
   input: async () => {
-    const list = await fs.readdirp(values['src-dir'], { fileFilter: values['file-filter'] });
-    return list.map(entry => ({ srcFile: entry.fullPath }));
+    const list = await readdirp(srcDir, { fileFilter: fileFilter });
+    return list.map((entry) => ({ srcFile: entry.fullPath }));
   },
   concurrency: 1,
   processRow: async (row, i) => {

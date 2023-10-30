@@ -23,6 +23,7 @@
     "cheerio": "^1.0.0-rc.12",
     "config": "^3.3.9",
     "converter-to-sync": "^1.1.9",
+    "crawler": "^1.4.0",
     "crypto-js": "^4.1.1",
     "dayjs": "^1.11.8",
     "exceljs": "^4.3.0",

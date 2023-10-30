@@ -16,11 +16,11 @@ createTask({
       //   destDir: 'D:\\ljshell\\banpai\\banpai-mini-teacher\\src\\components\\new-msg-list',
       //   specialRules: [['输入框', '输入框']],
       // },
-      {
-        srcDir: 'D:\\ljshell\\banpai\\hardwareMini\\src\\components\\list-item',
-        destDir: 'D:\\ljshell\\banpai\\hardwareMini\\src\\components\\picture-upload',
-        specialRules: [['输入框', '输入框']],
-      },
+      // {
+      //   srcDir: 'D:\\ljshell\\banpai\\hardwareMini\\src\\components\\area-select',
+      //   destDir: 'D:\\ljshell\\banpai\\hardwareMini\\src\\components\\school-select',
+      //   specialRules: [['输入框', '输入框']],
+      // },
     ];
   },
   concurrency: 1,

@@ -1,8 +1,8 @@
+import { createCsvTask } from '@/common/csv-task';
+import { downloadFile } from '@/common/request';
 import config from 'config';
 import fs from 'fs-extra';
 import path from 'path';
-import { createCsvTask } from '../common/csv-task';
-import { downloadFile } from '../common/request';
 
 // 输出目录
 const outDir = 'd:\\output\\activity_files\\';

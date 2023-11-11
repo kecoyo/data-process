@@ -1,14 +1,14 @@
+import { createCsvTask } from '@/common/csv-task';
 import path from 'path';
-import OssClient from '../common/oss-client';
-import CsvTask from '../common/csv-task';
 import config from '../common/config';
+import OssClient from '../common/oss-client';
 
 const ossClient = new OssClient({ ...config.ossclient, bucket: 'file-video' });
 
 /**
  * OSS恢复归档文件
  */
-CsvTask.createTask({
+createCsvTask({
   input: path.join(__dirname, './restore_file-input.csv'),
   processRow: async (row, i) => {
     if (!row.oss_file) {

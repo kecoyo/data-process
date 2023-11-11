@@ -1,25 +1,19 @@
-import path from 'path';
-import util from 'util';
-import Task from '../common/task';
-import fs from '../common/fs-extra';
-import { spawn } from '../common/child_process';
+import { readdirp } from '@/common/fs-extra';
+import { createTask } from '@/common/task';
 import dayjs from 'dayjs';
+import fs from 'fs-extra';
+import path from 'path';
 
-const options = {
-  'src-dir': { type: 'string', default: 'e:\\我的相册\\来自：vivo X9（妈）' },
-  'file-filter': { type: 'string', default: '15[0-9]*.(jpg|mp4)' },
-  'out-dir': { type: 'string', default: '' },
-};
-const { values } = util.parseArgs({ options });
-console.log('values:', JSON.stringify(values));
+const srcDir = 'e:\\我的相册\\来自：vivo X9（妈）';
+const fileFilter = '15[0-9]*.(jpg|mp4)';
 
 /**
  * 批量heic图片转jpg
  */
-Task.createTask({
+createTask({
   input: async () => {
-    const list = await fs.readdirp(values['src-dir'], { fileFilter: values['file-filter'] });
-    return list.map(entry => ({ srcFile: entry.fullPath }));
+    const list = await readdirp(srcDir, { fileFilter: fileFilter });
+    return list.map((entry) => ({ srcFile: entry.fullPath }));
   },
   concurrency: 1,
   processRow: async (row, i) => {
@@ -30,7 +24,7 @@ Task.createTask({
     const srcName = srcFileName.replace(path.extname(srcFile), '');
 
     // 没有指定输出目录，输出到源目录
-    const outDir = values['out-dir'] || srcDir;
+    const outDir = srcDir;
     // 确保目录存在
     fs.ensureDirSync(outDir);
 

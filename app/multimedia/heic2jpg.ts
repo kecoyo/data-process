@@ -1,8 +1,8 @@
+import { createTask } from '@/common/task';
 import path from 'path';
 import util from 'util';
-import Task from '../common/task';
-import fs from '../common/fs-extra';
 import { spawn } from '../common/child_process';
+import fs from '../common/fs-extra';
 
 const options = {
   'src-dir': { type: 'string', default: 'D:\\heic' },
@@ -18,10 +18,10 @@ console.log('values:', JSON.stringify(values));
 /**
  * 批量heic图片转jpg
  */
-Task.createTask({
+createTask({
   input: async () => {
     const list = await fs.readdirp(values['src-dir'], { fileFilter: values['file-filter'] });
-    return list.map(entry => ({ srcFile: entry.fullPath }));
+    return list.map((entry) => ({ srcFile: entry.fullPath }));
   },
   // concurrency: 1,
   processRow: async (row, i) => {
@@ -33,7 +33,7 @@ Task.createTask({
     const fileName = srcFileName.replace(path.extname(srcFile), '');
 
     // 没有指定输出目录，输出到源目录
-    const outDir = values['out-dir'] || srcDir;
+    const outDir = srcDir;
 
     // 确保目录存在
     fs.ensureDirSync(outDir);

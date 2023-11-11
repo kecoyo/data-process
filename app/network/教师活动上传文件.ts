@@ -1,6 +1,6 @@
+import { createCsvTask } from '@/common/csv-task';
 import fs from 'fs-extra';
 import path from 'path';
-import { createCsvTask } from '../common/csv-task';
 
 // 输出目录
 const outDir = 'd:\\output\\activity_files\\';

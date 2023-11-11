@@ -1,12 +1,11 @@
+import { createCsvTask } from '@/common/csv-task';
 import path from 'path';
-import axios from 'axios';
 import shixunApi from '../apis/shixunApi';
-import { m3u8ToMp4 } from '../common/ffmpeg';
 import config from '../common/config';
+import { m3u8ToMp4 } from '../common/ffmpeg';
 import fsExtra from '../common/fs-extra';
-import OssClient from '../common/oss-client';
-import CsvTask from '../common/csv-task';
 import mysql from '../common/mysql';
+import OssClient from '../common/oss-client';
 
 const WORK_DIR = path.join(config.tempDir, 'shixun_mp4');
 const OSS_DIR = 'shixun/';
@@ -19,7 +18,7 @@ const internal = config.get('ossclient.internal');
 /**
  * 检查听评课上报mp4字段为空，用m3u8生成mp4
  */
-CsvTask.createTask({
+createCsvTask({
   input: path.join(__dirname, './check_commentary_empty.csv'),
   concurrency: 1,
   processRow: async (row, i) => {
@@ -27,7 +26,7 @@ CsvTask.createTask({
 
     try {
       // 查询听评课详情
-      let commentary_course = await mysql.query('select record_classroom, record_classroom_file from commentary_course where commentary_id = ?', [row.commentary_id]).then(res => res[0]);
+      let commentary_course = await mysql.query('select record_classroom, record_classroom_file from commentary_course where commentary_id = ?', [row.commentary_id]).then((res) => res[0]);
 
       // 判断数据是否存在
       if (!commentary_course) throw new Error('commentary_course not found');

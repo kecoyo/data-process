@@ -1,7 +1,7 @@
+import { createTask } from '@/common/task';
 import _ from 'lodash';
 import path from 'path';
 import { Worker } from 'worker_threads';
-import { createTask } from '../../common/task';
 
 const runWorker = (workerData) => {
   return new Promise((resolve, reject) => {

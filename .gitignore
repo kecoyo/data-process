@@ -16,3 +16,6 @@ config/
 *copy*.*
 app/api-doc/mock/
 app/api-doc/apis/
+
+app/crawler/detail_0
+app/crawler/detail_1

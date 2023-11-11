@@ -44,4 +44,4 @@ const c = new Crawler({
 });
 
 // Queue just one URL, with default callback
-c.queue(['https://deepinout.com/regexp/regexp-tutorials/67_the_regular_expression_match_method.html']);
+c.queue(['https://m2.jiazhengye.cn/aunt/detail?au=4a0e647477d29aa8465ed0867b938601&ts=1674047615&_from=h5&v=6.1.2&gray=']);
